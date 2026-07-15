@@ -8,7 +8,10 @@ public class Main {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) {
+        // Se inician los repositorios
         repository = new GameRepository();
+
+        // Se inicia la ventana principal
         Window mw = new Window();
     }
 }

@@ -1,18 +1,16 @@
 package model;
 
-import javax.swing.Icon;
-
 public class Game {
 	private int id;
 	private String name;
     private int category;
     private int library;
     private int score;
-    private long timePlayed;
+    private int timePlayed;
     private int play_count;
-    private boolean completed;
+    private int completed;
     private String completed_date;
-    private boolean hidden;
+    private int hidden;
     private String path;
     private String release_date;
     private String developer;
@@ -28,19 +26,50 @@ public class Game {
     private String version;
     private String added;
     private String modified;
-    private boolean favorite;
-    private boolean statistic;
-    private boolean portable;
+    private int favorite;
+    private int statistic;
+    private int portable;
     private String image;
     private String notes;
-    private Icon icon;
 
-    public Game(int id, String name) {
-        this.id = id;
+	public Game(int id, String name, int category, int library, int score, int timePlayed, int play_count,
+				int completed, String completed_date, int hidden, String path, String release_date,
+				String developer, String series, String play_mode, String status, String source, String last_played,
+				int rating, int platform, String publisher, String region, String version, String added, String modified,
+				int favorite, int statistic, int portable, String image, String notes) {
+		this.id = id;
 		this.name = name;
-    }    
-    
-    public int getId() {
+		this.category = category;
+		this.library = library;
+		this.score = score;
+		this.timePlayed = timePlayed;
+		this.play_count = play_count;
+		this.completed = completed;
+		this.completed_date = completed_date;
+		this.hidden = hidden;
+		this.path = path;
+		this.release_date = release_date;
+		this.developer = developer;
+		this.series = series;
+		this.play_mode = play_mode;
+		this.status = status;
+		this.source = source;
+		this.last_played = last_played;
+		this.rating = rating;
+		this.platform = platform;
+		this.publisher = publisher;
+		this.region = region;
+		this.version = version;
+		this.added = added;
+		this.modified = modified;
+		this.favorite = favorite;
+		this.statistic = statistic;
+		this.portable = portable;
+		this.image = image;
+		this.notes = notes;
+	}
+
+	public int getId() {
 		return id;
 	}
 
@@ -80,11 +109,11 @@ public class Game {
 		this.score = score;
 	}
 
-	public long getTimePlayed() {
+	public int getTimePlayed() {
 		return timePlayed;
 	}
 
-	public void setTimePlayed(long timePlayed) {
+	public void setTimePlayed(int timePlayed) {
 		this.timePlayed = timePlayed;
 	}
 
@@ -96,11 +125,11 @@ public class Game {
 		this.play_count = play_count;
 	}
 
-	public boolean isCompleted() {
+	public int isCompleted() {
 		return completed;
 	}
 
-	public void setCompleted(boolean completed) {
+	public void setCompleted(int completed) {
 		this.completed = completed;
 	}
 
@@ -112,11 +141,11 @@ public class Game {
 		this.completed_date = completed_date;
 	}
 
-	public boolean isHidden() {
+	public int isHidden() {
 		return hidden;
 	}
 
-	public void setHidden(boolean hidden) {
+	public void setHidden(int hidden) {
 		this.hidden = hidden;
 	}
 
@@ -240,27 +269,27 @@ public class Game {
 		this.modified = modified;
 	}
 
-	public boolean isFavorite() {
+	public int isFavorite() {
 		return favorite;
 	}
 
-	public void setFavorite(boolean favorite) {
+	public void setFavorite(int favorite) {
 		this.favorite = favorite;
 	}
 
-	public boolean isStatistic() {
+	public int isStatistic() {
 		return statistic;
 	}
 
-	public void setStatistic(boolean statistic) {
+	public void setStatistic(int statistic) {
 		this.statistic = statistic;
 	}
 
-	public boolean isPortable() {
+	public int isPortable() {
 		return portable;
 	}
 
-	public void setPortable(boolean portable) {
+	public void setPortable(int portable) {
 		this.portable = portable;
 	}
 
@@ -278,13 +307,5 @@ public class Game {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
-	}
-
-	public Icon getIcon() {
-		return icon;
-	}
-
-	public void setIcon(Icon icon) {
-		this.icon = icon;
 	}
 }
