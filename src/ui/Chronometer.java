@@ -1,7 +1,7 @@
 package ui;
 
 import util.Utils;
-import service.ConfigService;
+import controller.PlayingController;
 
 import javax.swing.JInternalFrame;
 import javax.swing.BorderFactory;
@@ -9,11 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-
-import controller.PlayingController;
-
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,31 +20,12 @@ import java.awt.event.ActionEvent;
 
 public class Chronometer extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 3054154723097695816L;
-	private static final int SECONDS_PER_HOUR = 3600;
-	private String user_id = ConfigService.getProperty("user_id");
-	private String userName = ConfigService.getProperty("name");
-	private String gameName;
-	private int minutesTotalPlayed = 0;
-	private int current_session_number = 0;
-	private int totalSeconds = 0;
-	private int secondsBeetwenTimes = 0;
-	private int pauses = 0;
-	private int totalSecondsPause = 0;
-	private int secondsBeetwenTimesPause = 0;
-	private int totalPlaying;
-	private int totalPause = 0;
-	private int gameTimePlayedTotal = 0;
-	private boolean pause = false;
-	private String startTime = Utils.getFormattedDateTime();
-	private LocalDateTime initTime;
-	private LocalDateTime initPauseTime;
-	private int gameId;
 	private JLabel lblSeparator = new JLabel("_____________________________________________");
 	private JLabel lblSeparator2 = new JLabel("_____________________________________________");
 	private JLabel lblSeparator3 = new JLabel("_____________________________________________");
 	private JLabel lblGameName = new JLabel("Nombre del juego");
 	private JLabel lblSessionStatus = new JLabel("\u25CF Sesión activa");
-	private JLabel lblTime = new JLabel("00:00:00");
+	private JLabel lblTime = new JLabel("0h 00m 00s");
 	private JLabel lblInfoTime = new JLabel("Tiempo jugado efectivo");
 	private JLabel lblInitDate = new JLabel("Iniciado a las 00:00 hace 0h 0m");
 	private JButton btnPause = new JButton("Pausar");
@@ -59,9 +36,9 @@ public class Chronometer extends JInternalFrame implements ActionListener {
 	private JLabel lblPauseTime = new JLabel("Tiempo en pausa");
 	private JLabel lblPauseTimeValue = new JLabel("0h 00m 00s");
 	private JLabel lblTotalTime = new JLabel("Tiempo total");
-	private JLabel lblTotalTimeValue = new JLabel("00:00:00");
+	private JLabel lblTotalTimeValue = new JLabel("0h 00m 00s");
 	private JLabel lblMedTimeSession = new JLabel("Media por sesión");
-	private JLabel lblMedTimeSessionValue = new JLabel("00:00:00");
+	private JLabel lblMedTimeSessionValue = new JLabel("0h 00m 00s");
 	private JLabel lblTotalPlayedGame = new JLabel("Tiempo total jugado");
 	private JLabel lblTotalPlayedGameValue = new JLabel("00:00");
 	private JLabel lblPlayCount = new JLabel("Veces iniciado");
@@ -70,10 +47,11 @@ public class Chronometer extends JInternalFrame implements ActionListener {
 	private JLabel lblInfoFutureTime = new JLabel("0h 0m");
 	private JLabel lblInfoFutureFooter = new JLabel("tiempo total jugado");
 
-    private PlayingController pc;
+    private PlayingController controller;
 	
     public Chronometer(PlayingController playingController) {
-        this.pc = playingController;
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        this.controller = playingController;
     	initComponents();
 
 		btnPause.addActionListener(this);
@@ -87,14 +65,54 @@ public class Chronometer extends JInternalFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnPause) {
-            
+            controller.pauseSession();
+        } else if(e.getSource() == btnStop) {
+            controller.endSession();
+            this.dispose();
         }
     }
+    
+    public void setTime(String seconds) {
+        lblTime.setText(seconds);
+    }
 
-	public void initComponents() {        
-        /*setClosable(false);
-        setMaximizable(false);
-        setIconifiable(false);*/
+    public void setTimeTotal(String seconds) {
+        lblTotalTimeValue.setText(seconds);
+    }
+
+    public void setTimePaused(String seconds) {
+        lblPauseTimeValue.setText(seconds);
+    }
+
+    public void setGameName(String name) {
+        lblGameName.setText(name);
+    }
+    
+    public void setPlayCount(String playCount) {
+        lblPlayCountValue.setText(playCount);
+    }
+
+    public void setTotalPlayed(String totalPlayed) {
+        lblTotalPlayedGameValue.setText(totalPlayed);
+    }
+
+    public void setTotalPlayedAfterSession(String totalPlayedAfterSession) {
+        lblInfoFutureTime.setText(totalPlayedAfterSession);
+    }
+
+    public void setTotalFutureTime(String totalFutureTime) {
+        lblInfoFutureTime.setText(totalFutureTime);
+    }
+
+    public void btnPauseText(String text) {
+        btnPause.setText(text);
+    }
+
+    public void setPauseCount(String text) {
+        lblPausesValue.setText(text);
+    }
+
+	public void initComponents() {
         setResizable(false);
         setLayout(new BorderLayout(10, 10));
         
@@ -257,8 +275,6 @@ public class Chronometer extends JInternalFrame implements ActionListener {
         
     	add(pnlLeft, BorderLayout.WEST);
     	add(pnlRight, BorderLayout.EAST);
-    	    	
-    	lblGameName.setText(gameName);
     	
     	/*FlatSVGIcon icon = new FlatSVGIcon("resources/icons/player-pause.svg", 32, 32);
     	icon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.WHITE));
@@ -268,12 +284,4 @@ public class Chronometer extends JInternalFrame implements ActionListener {
     	icon.setColorFilter(new FlatSVGIcon.ColorFilter(color -> Color.WHITE));
     	btnStop.setIcon(icon);*/
 	}
-
-    public void setTime(int seconds) {
-        lblTime.setText(String.valueOf(seconds));
-    }
-
-    public void setGameName(String name) {
-        lblGameName.setText(name);
-    }
 }

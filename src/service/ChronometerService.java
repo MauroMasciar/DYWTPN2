@@ -5,50 +5,61 @@ import javax.swing.Timer;
 public class ChronometerService {
     private ChronometerListener listener;
     private int playedSeconds;
-    private int pauseSeconds;
+    private int pausedSeconds;
     private int pauseCount;
-    private boolean pause;
+    private boolean active = true;
+    private boolean pause = false;
 
     public void start() {
-        Timer t = new Timer(1000, e -> runTime());
+        Timer t = new Timer(1000, e -> run());
     	t.start();
     }
 
-    public void runTime() {
-        if(!pause) {
-            notifyTime(String.valueOf(pauseSeconds));
-            playedSeconds++;
-        }
-    }
-
-    public void runPause() {
-        if(pause) {
-            notifyTime(String.valueOf(pauseSeconds));
-            pauseSeconds++;
-        }
-        
-    }
-
-    public void pause() {
-        if(pause) {
-            pause = false;
-        } else {
-            pause = true;
-            pauseCount++;
+    public void run() {
+        if(active) {
+            if(!pause) {
+                notifyTime(String.valueOf(playedSeconds));
+                playedSeconds++;
+            } else {
+                notifyTime(String.valueOf(pausedSeconds));
+                pausedSeconds++;
+            }
         }
     }
 
     public void stop() {
-        
+        active = false;
     }
 
     public void notifyTime(String time) {
         if(listener != null) {
-            listener.timeUpdate(playedSeconds);
+            listener.timeUpdate(playedSeconds, pausedSeconds);
+            if(playedSeconds % 60 == 0 && playedSeconds != 0) listener.notifyMinuteElapsed(playedSeconds);
         }
     }
 
     public void setListener(ChronometerListener listener) {
         this.listener = listener;
+    }
+
+    public boolean isPaused() {
+        return pause;
+    }
+
+    public void setPaused(boolean p) {
+        pause = p;
+        if(pause) pauseCount++;
+    }
+
+    public int getPlayedSeconds() {
+        return playedSeconds;
+    }
+
+    public int getPausedSeconds() {
+        return pausedSeconds;
+    }
+
+    public int getPauseCount() {
+        return pauseCount;
     }
 }

@@ -117,15 +117,15 @@ public class Game {
 		this.timePlayed = timePlayed;
 	}
 
-	public int getPlay_count() {
+	public int getPlayCount() {
 		return play_count;
 	}
 
-	public void setPlay_count(int play_count) {
+	public void setPlayCount(int play_count) {
 		this.play_count = play_count;
 	}
 
-	public int isCompleted() {
+	public int getCompleted() {
 		return completed;
 	}
 
@@ -133,15 +133,15 @@ public class Game {
 		this.completed = completed;
 	}
 
-	public String getCompleted_date() {
+	public String getCompletedDate() {
 		return completed_date;
 	}
 
-	public void setCompleted_date(String completed_date) {
+	public void setCompletedDate(String completed_date) {
 		this.completed_date = completed_date;
 	}
 
-	public int isHidden() {
+	public int getHidden() {
 		return hidden;
 	}
 
@@ -157,11 +157,11 @@ public class Game {
 		this.path = path;
 	}
 
-	public String getRelease_date() {
+	public String getReleaseDate() {
 		return release_date;
 	}
 
-	public void setRelease_date(String release_date) {
+	public void setReleaseDate(String release_date) {
 		this.release_date = release_date;
 	}
 
@@ -181,11 +181,11 @@ public class Game {
 		this.series = series;
 	}
 
-	public String getPlay_mode() {
+	public String getPlayMode() {
 		return play_mode;
 	}
 
-	public void setPlay_mode(String play_mode) {
+	public void setPlayMode(String play_mode) {
 		this.play_mode = play_mode;
 	}
 
@@ -205,11 +205,11 @@ public class Game {
 		this.source = source;
 	}
 
-	public String getLast_played() {
+	public String getLastPlayed() {
 		return last_played;
 	}
 
-	public void setLast_played(String last_played) {
+	public void setLastPlayed(String last_played) {
 		this.last_played = last_played;
 	}
 
@@ -269,7 +269,7 @@ public class Game {
 		this.modified = modified;
 	}
 
-	public int isFavorite() {
+	public int getFavorite() {
 		return favorite;
 	}
 
@@ -277,7 +277,7 @@ public class Game {
 		this.favorite = favorite;
 	}
 
-	public int isStatistic() {
+	public int getStatistic() {
 		return statistic;
 	}
 
@@ -285,7 +285,7 @@ public class Game {
 		this.statistic = statistic;
 	}
 
-	public int isPortable() {
+	public int getPortable() {
 		return portable;
 	}
 
