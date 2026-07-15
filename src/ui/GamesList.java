@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
@@ -60,6 +59,7 @@ public class GamesList extends JInternalFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnLaunch) {
 			try {
+				@SuppressWarnings("unused")
 				PlayingController pc = new PlayingController(jlistGames.getSelectedValue(), desktopPane);
 			} catch (NullPointerException ex) {
 				ex.printStackTrace();

@@ -8,9 +8,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 public class Main {
-    public static final String VERSION_APP = "2.0.0.5";
+    public static final String VERSION_APP = "2.0.0.6";
     public static GameRepository repository;
-
+    
     @SuppressWarnings("unused")
     public static void main(String[] args) {
         try {
@@ -24,7 +24,7 @@ public class Main {
         // Se inicia la ventana principal
         Window mw = new Window();
 
-        // Testing
-        //Chronometer c = new Chronometer();
+        // test
+        //test t = new test();
     }
 }

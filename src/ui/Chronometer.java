@@ -2,8 +2,8 @@ package ui;
 
 import util.Utils;
 import controller.PlayingController;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -89,20 +89,28 @@ public class Chronometer extends JInternalFrame implements ActionListener {
         lblGameName.setText(name);
     }
     
-    public void setPlayCount(String playCount) {
-        lblPlayCountValue.setText(playCount);
+    public void setPlayCount(String text) {
+        lblPlayCountValue.setText(text);
     }
 
-    public void setTotalPlayed(String totalPlayed) {
-        lblTotalPlayedGameValue.setText(totalPlayed);
+    public void setTotalPlayed(String text) {
+        lblTotalPlayedGameValue.setText(text);
     }
 
-    public void setTotalPlayedAfterSession(String totalPlayedAfterSession) {
-        lblInfoFutureTime.setText(totalPlayedAfterSession);
+    public void setTotalPlayedAfterSession(String text) {
+        lblInfoFutureTime.setText(text);
     }
 
-    public void setTotalFutureTime(String totalFutureTime) {
-        lblInfoFutureTime.setText(totalFutureTime);
+    public void setTotalFutureTime(String text) {
+        lblInfoFutureTime.setText(text);
+    }
+
+    public void setAgeSession(String text) {
+        lblInitDate.setText(text);
+    }
+
+    public void setAvgTimePlayed(String text) {
+        lblMedTimeSessionValue.setText(text);
     }
 
     public void btnPauseText(String text) {
@@ -112,6 +120,23 @@ public class Chronometer extends JInternalFrame implements ActionListener {
     public void setPauseCount(String text) {
         lblPausesValue.setText(text);
     }
+
+    public void strobe(boolean pause) {
+        if(pause) {
+            lblSessionStatus.setText("\u25CF Sesión no activa");
+            if(lblSessionStatus.getForeground().equals(Color.decode(Utils.COLOR_GREEN))) {
+                lblSessionStatus.setForeground(Color.RED);
+                lblTime.setForeground(Color.RED);
+            } else {
+                lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
+                lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
+            }
+        } else {
+            lblSessionStatus.setText("\u25CF Sesión activa");
+            lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
+            lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
+        }
+	}
 
 	public void initComponents() {
         setResizable(false);

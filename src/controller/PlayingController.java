@@ -2,21 +2,31 @@ package controller;
 
 import service.ChronometerListener;
 import service.ChronometerService;
+import service.Toast;
 import model.Game;
 import ui.Chronometer;
 import util.Utils;
 import dao.GameDAO;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JDesktopPane;
+import javax.swing.Timer;
 
 public class PlayingController implements ChronometerListener {
     private final Game game;
     private Chronometer view;
-    ChronometerService ch;
+    private ChronometerService ch;
     private boolean game_init = false;
+    private LocalDateTime startTime = LocalDateTime.now();
+    private DateTimeFormatter format_time = DateTimeFormatter.ofPattern("HH:mm");
+    private int playedSeconds;
+    private Timer timerStrobe;
+    private JDesktopPane desktopPane;
 
     public PlayingController(Game game, JDesktopPane desktopPane) {
         this.game = game;
+        this.desktopPane = desktopPane;
         
         // Iniciamos vista
         view = new Chronometer(this);
@@ -32,6 +42,12 @@ public class PlayingController implements ChronometerListener {
         view.setPlayCount(String.valueOf(game.getPlayCount()));
         view.setTotalPlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed(), true));
         view.setTotalPlayedAfterSession(Utils.getTotalHoursFromSeconds(game.getTimePlayed(), false));
+        view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(0, false));
+        view.setAvgTimePlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed() / game.getPlayCount(), false));
+        timerStrobe = new Timer(500, e -> view.strobe(ch.isPaused()));
+        timerStrobe.start();
+
+        Toast.showToast(desktopPane, "Juego lanzado");
     }
 
     private void saveGame() {
@@ -43,24 +59,29 @@ public class PlayingController implements ChronometerListener {
         if(ch.isPaused()) {
             ch.setPaused(false);
             view.btnPauseText("Pausar");
+            Toast.showToast(desktopPane, "Cronómetro corriendo");
         } else {
             ch.setPaused(true);
             view.setPauseCount(String.valueOf(ch.getPauseCount()));
             view.btnPauseText("Reanudar");
+            Toast.showToast(desktopPane, "Cronómetro en pausa");
         }
     }
 
     public void endSession() {
         ch.stop();
-        saveGame();
+        timerStrobe.stop();
+        game.setTimePlayed(game.getTimePlayed() + playedSeconds);
+        if(playedSeconds > 300) saveGame();
     }
 
     @Override
-    public void timeUpdate(int secondsPlayed, int secondsPaused) {
-        view.setTime(Utils.getTotalHoursFromSeconds(secondsPlayed, true));
-        view.setTimePaused(Utils.getTotalHoursFromSeconds(secondsPaused, true));
-        view.setTimeTotal(Utils.getTotalHoursFromSeconds(secondsPaused + secondsPlayed, true));
-        if(!game_init & secondsPlayed == 300) {
+    public void timeUpdate(int playedSeconds, int pausedSeconds) {
+        this.playedSeconds = playedSeconds;
+        view.setTime(Utils.getTotalHoursFromSeconds(playedSeconds, true));
+        view.setTimePaused(Utils.getTotalHoursFromSeconds(pausedSeconds, true));
+        view.setTimeTotal(Utils.getTotalHoursFromSeconds(pausedSeconds + playedSeconds, true));
+        if(!game_init & playedSeconds == 300) {
             game_init = true;
             game.setPlayCount(game.getPlayCount() + 1);
         }
@@ -68,8 +89,8 @@ public class PlayingController implements ChronometerListener {
 
     @Override
     public void notifyMinuteElapsed(int seconds) {
-        game.setTimePlayed(60 + game.getTimePlayed());
-        view.setTotalFutureTime(Utils.getTotalHoursFromSeconds(game.getTimePlayed(), false));
+        view.setTotalFutureTime(Utils.getTotalHoursFromSeconds(game.getTimePlayed() + seconds, false));
+        view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(seconds, false));
         saveGame();
     }
 }
