@@ -71,7 +71,7 @@ public class Window extends JFrame implements ActionListener {
         JDesktopPane desktopPane = new JDesktopPane();
         setContentPane(desktopPane);
 
-        PlayingController pc = new PlayingController(Main.repository.games_list.get(1), desktopPane);
+        add(new GamesList(desktopPane));
         
 		setVisible(true);
 	}

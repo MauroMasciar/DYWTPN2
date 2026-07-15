@@ -9,9 +9,10 @@ public class ChronometerService {
     private int pauseCount;
     private boolean active = true;
     private boolean pause = false;
+    private Timer t;
 
     public void start() {
-        Timer t = new Timer(1000, e -> run());
+        t = new Timer(1000, e -> run());
     	t.start();
     }
 
@@ -29,6 +30,7 @@ public class ChronometerService {
 
     public void stop() {
         active = false;
+        t.stop();
     }
 
     public void notifyTime(String time) {
