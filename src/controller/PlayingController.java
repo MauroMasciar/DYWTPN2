@@ -45,7 +45,11 @@ public class PlayingController implements ChronometerListener {
         view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(0, false));
         view.setAvgTimePlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed() / game.getPlayCount(), false));
         timerStrobe = new Timer(500, e -> view.strobe(ch.isPaused()));
-        timerStrobe.start();
+        
+
+        // Asignamos listener a los componentes
+        view.setBtnPauseListener(e -> pauseSession());
+        view.setBtnStopListener(e -> endSession());
 
         Toast.showToast(desktopPane, "Juego lanzado");
     }
@@ -60,12 +64,15 @@ public class PlayingController implements ChronometerListener {
             ch.setPaused(false);
             view.btnPauseText("Pausar");
             Toast.showToast(desktopPane, "Cronómetro corriendo");
+            timerStrobe.stop();
         } else {
             ch.setPaused(true);
             view.setPauseCount(String.valueOf(ch.getPauseCount()));
             view.btnPauseText("Reanudar");
             Toast.showToast(desktopPane, "Cronómetro en pausa");
+            timerStrobe.start();
         }
+        view.strobe(ch.isPaused());
     }
 
     public void endSession() {
@@ -73,6 +80,7 @@ public class PlayingController implements ChronometerListener {
         timerStrobe.stop();
         game.setTimePlayed(game.getTimePlayed() + playedSeconds);
         if(playedSeconds > 300) saveGame();
+        view.dispose();
     }
 
     @Override

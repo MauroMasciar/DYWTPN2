@@ -10,16 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Chronometer extends JInternalFrame implements ActionListener {
+public class Chronometer extends JInternalFrame {
 	private static final long serialVersionUID = 3054154723097695816L;
 	private JLabel lblSeparator = new JLabel("_____________________________________________");
 	private JLabel lblSeparator2 = new JLabel("_____________________________________________");
@@ -47,32 +46,37 @@ public class Chronometer extends JInternalFrame implements ActionListener {
 	private JLabel lblInfoFuture = new JLabel("Con esta sesión llegarás a");
 	private JLabel lblInfoFutureTime = new JLabel("0h 0m");
 	private JLabel lblInfoFutureFooter = new JLabel("tiempo total jugado");
-
-    private PlayingController controller;
+    //private PlayingController controller;
 	
     public Chronometer(PlayingController playingController) {
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        this.controller = playingController;
+        //this.controller = playingController;
     	initComponents();
 
-		btnPause.addActionListener(this);
-        btnStop.addActionListener(this);
+		
 
         pack();
 
 		setVisible(true);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnPause) {
-            controller.pauseSession();
-        } else if(e.getSource() == btnStop) {
-            controller.endSession();
-            this.dispose();
-        }
-    }
     
+    public void strobe(boolean pause) {
+        if(pause) {
+            lblSessionStatus.setText("\u25CF Sesión no activa");
+            if(lblSessionStatus.getForeground().equals(Color.decode(Utils.COLOR_GREEN))) {
+                lblSessionStatus.setForeground(Color.RED);
+                lblTime.setForeground(Color.RED);
+            } else {
+                lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
+                lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
+            }
+        } else {
+            lblSessionStatus.setText("\u25CF Sesión activa");
+            lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
+            lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
+        }
+	}
+
     public void setTime(String seconds) {
         lblTime.setText(seconds);
     }
@@ -121,22 +125,13 @@ public class Chronometer extends JInternalFrame implements ActionListener {
         lblPausesValue.setText(text);
     }
 
-    public void strobe(boolean pause) {
-        if(pause) {
-            lblSessionStatus.setText("\u25CF Sesión no activa");
-            if(lblSessionStatus.getForeground().equals(Color.decode(Utils.COLOR_GREEN))) {
-                lblSessionStatus.setForeground(Color.RED);
-                lblTime.setForeground(Color.RED);
-            } else {
-                lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
-                lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
-            }
-        } else {
-            lblSessionStatus.setText("\u25CF Sesión activa");
-            lblSessionStatus.setForeground(Color.decode(Utils.COLOR_GREEN));
-            lblTime.setForeground(Color.decode(Utils.COLOR_GREEN));
-        }
-	}
+    public void setBtnPauseListener(ActionListener listener) {
+        btnPause.addActionListener(listener);
+    }
+
+    public void setBtnStopListener(ActionListener listener) {
+        btnStop.addActionListener(listener);
+    }
 
 	public void initComponents() {
         setResizable(false);

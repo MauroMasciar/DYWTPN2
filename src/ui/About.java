@@ -4,31 +4,21 @@ import app.Main;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import javax.swing.ImageIcon;
-import javax.swing.JInternalFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
-public class About extends JInternalFrame {
+public class About extends JDialog {
     private static final long serialVersionUID = 7342188362929540330L;
     private final JPanel pnlInfo = new JPanel();
     private final JLabel lblFirstLine = new JLabel();
     private final JLabel lblSecondLine = new JLabel();
 
-    public About() {
-        try {
-            ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/icons/about.png"));
-            this.setFrameIcon(icon);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "No se ha podido cargar algunos recursos.",
-                    "Error en la carga de recursos", JOptionPane.ERROR_MESSAGE);
-        }
+    public About(Window window, boolean modal) {
+        super(window, true);
         setBounds(90, 70, 420, 100);
         setTitle("Acerca de");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setClosable(true);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         lblFirstLine.setText("Software desarrollado por Mauro Masciadro - MASCIAR - Version " + Main.VERSION_APP);
