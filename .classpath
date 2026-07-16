@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="c:/Users/Mauro/Documents/Java/DYWTPN/lib/flatlaf-3.2.5.jar"/>
 	<classpathentry kind="lib" path="c:/Users/Mauro/Documents/Java/DYWTPN/lib/flatlaf-extras-3.2.5.jar"/>
 	<classpathentry kind="lib" path="c:/Users/Mauro/Documents/Java/DYWTPN/lib/jsvg-1.2.0.jar"/>
+	<classpathentry kind="lib" path="c:/Users/Mauro/Documents/Java/DYWTPN/lib/datechooser.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

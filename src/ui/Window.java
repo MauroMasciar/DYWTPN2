@@ -1,7 +1,7 @@
 package ui;
 
 import app.Main;
-import controller.PlayingController;
+import controller.AddGameController;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -22,7 +22,7 @@ public class Window extends JFrame implements ActionListener {
     private final JMenu mnuGames = new JMenu("Juegos");
     private final JMenuItem mnuiGamesAdd = new JMenuItem("Nuevo", new ImageIcon("gfx/new_game.png"));
     private final JMenuItem mnuiGamesEdit = new JMenuItem("Editar");
-    public JMenuItem mnuiGamesList = new JMenuItem("Ver biblioteca", new ImageIcon("gfx/games_list.png"));
+    private final JMenuItem mnuiGamesList = new JMenuItem("Ver biblioteca", new ImageIcon("gfx/games_list.png"));
     private final JMenuItem mnuiGamesWishlist = new JMenuItem("Ver lista de deseos");
     private final JMenu mnuiGamesView = new JMenu("Ver");
     private final JCheckBoxMenuItem mnuiGamesHidden = new JCheckBoxMenuItem("Ver ocultos");
@@ -54,6 +54,7 @@ public class Window extends JFrame implements ActionListener {
     private final JMenuItem mnuiHelpAbout = new JMenuItem("Acerca de", new ImageIcon("gfx/about.png"));
     private final JMenuItem mnuiHelpDebug = new JMenuItem("Debug", new ImageIcon("gfx/debug.png"));
     private final JMenuItem mnuiGamesExit = new JMenuItem("Salir");
+    private JDesktopPane desktopPane;
 	public Window() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		String title = "DYWTPN v" + Main.VERSION_APP;
@@ -63,14 +64,11 @@ public class Window extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 		setLayout(new FlowLayout());
-
-        
+        desktopPane = new JDesktopPane();
+        setContentPane(desktopPane);
         
 		initComponents();
-
-        JDesktopPane desktopPane = new JDesktopPane();
-        setContentPane(desktopPane);
-
+    
         add(new GamesList(desktopPane));
         
 		setVisible(true);
@@ -78,11 +76,14 @@ public class Window extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if(e.getSource() == mnuiGamesAdd) {
+            AddGameController gc = new AddGameController(this);
+        } else if(e.getSource() == mnuiHelpAbout) {
+            add(new About());
+        }
 	}
 
 	public void initComponents() {
-        
 		menubar.add(mnuGames);
         menubar.add(mnuPlayer);
         menubar.add(mnuData);

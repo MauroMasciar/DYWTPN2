@@ -18,7 +18,7 @@ public class About extends JInternalFrame {
 
     public About() {
         try {
-            ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("gfx/about.png"));
+            ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/icons/about.png"));
             this.setFrameIcon(icon);
         } catch (Exception ex) {
             ex.printStackTrace();

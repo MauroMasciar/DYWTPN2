@@ -84,6 +84,7 @@ public class PlayingController implements ChronometerListener {
         if(!game_init & playedSeconds == 300) {
             game_init = true;
             game.setPlayCount(game.getPlayCount() + 1);
+            saveGame();
         }
     }
 
@@ -91,6 +92,5 @@ public class PlayingController implements ChronometerListener {
     public void notifyMinuteElapsed(int seconds) {
         view.setTotalFutureTime(Utils.getTotalHoursFromSeconds(game.getTimePlayed() + seconds, false));
         view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(seconds, false));
-        saveGame();
     }
 }

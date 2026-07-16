@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 
 public class GamesList extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 6376047769180646261L;
-
 	JDesktopPane desktopPane;
 	
 	// Panel ListGames
