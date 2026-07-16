@@ -1,5 +1,6 @@
 package ui;
 
+import controller.AddGameController;
 import util.Utils;
 import util.Validations;
 
@@ -12,10 +13,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -27,10 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import com.raven.datechooser.DateChooser;
 
-import controller.AddGameController;
-
 public class AddGame extends JDialog implements ActionListener, ChangeListener {
-    private static final long serialVersionUID = 2765307118548151447L;
     private final JPanel pnlDetails = new JPanel();
     private final JLabel lblTitle = new JLabel("Titulo:");
     private final JLabel lblReleaseDate = new JLabel("Fecha de lanzamiento:");
@@ -66,7 +62,6 @@ public class AddGame extends JDialog implements ActionListener, ChangeListener {
     private final JTextField txtPlayMode = new JTextField(10);
     private final JTextField txtVersion = new JTextField(10);
     private final JTextField txtStatus = new JTextField(10);
-    private final JTextField txtSource = new JTextField(10);
     private final JTextField txtLastPlayed = new JTextField(10);
     private final JTextField txtAdded = new JTextField(10);
     private final JTextField txtModified = new JTextField(10);
@@ -94,21 +89,17 @@ public class AddGame extends JDialog implements ActionListener, ChangeListener {
     private final JButton btnSave = new JButton("Guardar");
     private final AddGameController controller;
 
-    
-
     public AddGame(Window window, AddGameController ag, boolean modal) {
         super(window, true);
         /*try {
-            ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/icons/new_game.png"));
-            this.setFrameIcon(icon);
+            java.awt.Image icon = Toolkit.getDefaultToolkit().getImage("resources/icons/new_game.png");
+            this.setIconImage(icon);
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "No se ha podido cargar algunos recursos.", "Error en la carga de recursos", JOptionPane.ERROR_MESSAGE);
         }*/
         setTitle("Añadir nuevo juego");
-        setBounds(0, 0, 850, 550);
-        //setClosable(true);
-        setResizable(false);
+        
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new GridBagLayout());
 
@@ -276,6 +267,7 @@ public class AddGame extends JDialog implements ActionListener, ChangeListener {
         pnlDetails.add(lblScore, gbc);
         gbc.gridx++;
         pnlDetails.add(spinScore, gbc);
+        
         // Panel notes
         pnlNotes.setLayout(new GridBagLayout());
         pnlNotes.setBorder(BorderFactory.createTitledBorder("Notas"));
@@ -357,46 +349,6 @@ public class AddGame extends JDialog implements ActionListener, ChangeListener {
 
         if(Validations.isEmpty(txtReleaseDate)) txtReleaseDate.setText("1900-01-01");
         if(Validations.isEmpty(txtLastPlayed)) txtLastPlayed.setText("1900-01-01 00:00:00");
-
-    }
-
-    
-
-    private void saveData() {
-        if(Validations.isEmpty(txtReleaseDate)) txtReleaseDate.setText("1900-01-01");
-        if(Validations.isEmpty(txtGenre)) txtGenre.setText("N/A");
-        if(Validations.isEmpty(txtDeveloper)) txtDeveloper.setText("N/A");
-        if(Validations.isEmpty(txtPublisher)) txtPublisher.setText("N/A");
-        if(Validations.isEmpty(txtSeries)) txtSeries.setText("N/A");
-        if(Validations.isEmpty(txtStatus)) txtStatus.setText("N/A");
-        if(Validations.isEmpty(txtSource)) txtSource.setText("N/A");
-        if(Validations.isEmpty(txtPlayMode)) txtPlayMode.setText("N/A");
-        if(Validations.isEmpty(txtVersion)) txtVersion.setText("N/A");
-        if(Validations.isEmpty(txtRegion)) txtRegion.setText("N/A");
-        if(Validations.isEmpty(txtPath)) txtPath.setText("N/A");
-        if(Validations.isEmpty(txtCompletedDate)) txtCompletedDate.setText("1900-01-01");
-        if(Validations.isEmpty(txtLastPlayed)) txtLastPlayed.setText("1900-01-01");
-        if(Validations.isEmpty(txtaNotes)) txtaNotes.setText(" ");
-
-        String completed = "0", ghost = "0";
-        int hide = 0, favorite = 0, statistic = 0, portable = 0;
-        
-
-        if(chFavorite.isSelected()) favorite = 1;
-        if(chCompleted.isSelected()) completed = "1";
-        if(chStatistic.isSelected()) statistic = 1;
-        if(chGhost.isSelected()) ghost = "1";
-        if(chPortable.isSelected()) portable = 1;
-        if(chHide.isSelected()) hide = 1;
-
-        //name = name.replace("'", "");
-        //name = name.replace("\"", "");
-        
-        if(Validations.isEmpty(txtGameName)) {
-            JOptionPane.showMessageDialog(this, "Debes al menos ingresar el nombre", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            
-        }
     }
 
     @Override
@@ -415,8 +367,5 @@ public class AddGame extends JDialog implements ActionListener, ChangeListener {
         if(e.getSource() == spinGameTime) {
             lblConvertedSeconds.setText(" (" + Utils.getTotalHoursFromSeconds((Integer)spinGameTime.getValue(), true) + ")");
         }
-    }
-    public void seta() {
-        btnSave.setText("ASDASD");
     }
 }

@@ -77,6 +77,7 @@ public class Window extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mnuiGamesAdd) {
+            @SuppressWarnings("unused")
             AddGameController gc = new AddGameController(this);
         } else if(e.getSource() == mnuiHelpAbout) {
             add(new About());
