@@ -49,43 +49,43 @@ public class AddGame extends JDialog {
     private final JLabel lblPath = new JLabel("Ejecutable:");
     private final JLabel lblScore = new JLabel(" Puntaje:");
     private final JLabel lblCategory = new JLabel("Categoria:");
-    public final JTextField txtGameName = new JTextField(20);
-    public final JTextField txtReleaseDate = new JTextField(20);
-    public final JTextField txtGenre = new JTextField(10);
-    public final JComboBox<String> cbPlatform = new JComboBox<>();
-    public final JTextField txtDeveloper = new JTextField(10);
-    public final JTextField txtPublisher = new JTextField(10);
-    public final JTextField txtSeries = new JTextField(10);
-    public final JTextField txtRegion = new JTextField(10);
-    public final JTextField txtPlayMode = new JTextField(10);
-    public final JTextField txtVersion = new JTextField(10);
-    public final JTextField txtStatus = new JTextField(10);
-    public final JTextField txtLastPlayed = new JTextField(10);
-    public final JTextField txtAdded = new JTextField(10);
-    public final JTextField txtModified = new JTextField(10);
-    public final JTextField txtPath = new JTextField(10);
-    public final JTextField txtCompletedDate = new JTextField(10);
-    public final JTextField txtPlayCount = new JTextField();
-    public final JCheckBox chFavorite = new JCheckBox("Favorito");
-    public final JCheckBox chCompleted = new JCheckBox("Completado");
-    public final JCheckBox chStatistic = new JCheckBox("Estadísticas");
-    public final JCheckBox chGhost = new JCheckBox("Fantasma");
-    public final JCheckBox chPortable = new JCheckBox("Portable");
-    public final JCheckBox chHide = new JCheckBox("Oculto");
-    public final JComboBox<String> cbRating = new JComboBox<>();
-    public final JComboBox<String> cbCategory = new JComboBox<>();
-    public final JComboBox<String> cbLibrary = new JComboBox<>();
-    public final SpinnerNumberModel spinnerNumberModelScore = new SpinnerNumberModel();
-    public final SpinnerNumberModel spinnerNumberModelGameTime = new SpinnerNumberModel();
-    public final JSpinner spinScore = new JSpinner();
-    public final JSpinner spinGameTime = new JSpinner();
-    public final JPanel pnlNotes = new JPanel();
-    public final JTextArea txtaNotes = new JTextArea();
-    public final JScrollPane scrNotes = new JScrollPane(txtaNotes);
-    public final DateChooser dcCompletedDate = new DateChooser();
-    public final DateChooser dcReleaseDate = new DateChooser();
-    public final JButton btnSave = new JButton("Guardar");
-    public final AddGameController controller;
+    private final JTextField txtGameName = new JTextField(20);
+    private final JTextField txtReleaseDate = new JTextField(20);
+    private final JTextField txtGenre = new JTextField(10);
+    private final JComboBox<String> cbPlatform = new JComboBox<>();
+    private final JTextField txtDeveloper = new JTextField(10);
+    private final JTextField txtPublisher = new JTextField(10);
+    private final JTextField txtSeries = new JTextField(10);
+    private final JTextField txtRegion = new JTextField(10);
+    private final JTextField txtPlayMode = new JTextField(10);
+    private final JTextField txtVersion = new JTextField(10);
+    private final JTextField txtStatus = new JTextField(10);
+    private final JTextField txtLastPlayed = new JTextField(10);
+    private final JTextField txtAdded = new JTextField(10);
+    private final JTextField txtModified = new JTextField(10);
+    private final JTextField txtPath = new JTextField(10);
+    private final JTextField txtCompletedDate = new JTextField(10);
+    private final JTextField txtPlayCount = new JTextField();
+    private final JCheckBox chFavorite = new JCheckBox("Favorito");
+    private final JCheckBox chCompleted = new JCheckBox("Completado");
+    private final JCheckBox chStatistic = new JCheckBox("Estadísticas");
+    private final JCheckBox chGhost = new JCheckBox("Fantasma");
+    private final JCheckBox chPortable = new JCheckBox("Portable");
+    private final JCheckBox chHide = new JCheckBox("Oculto");
+    private final JComboBox<String> cbRating = new JComboBox<>();
+    private final JComboBox<String> cbCategory = new JComboBox<>();
+    private final JComboBox<String> cbLibrary = new JComboBox<>();
+    private final SpinnerNumberModel spinnerNumberModelScore = new SpinnerNumberModel();
+    private final SpinnerNumberModel spinnerNumberModelGameTime = new SpinnerNumberModel();
+    private final JSpinner spinScore = new JSpinner();
+    private final JSpinner spinGameTime = new JSpinner();
+    private final JPanel pnlNotes = new JPanel();
+    private final JTextArea txtaNotes = new JTextArea();
+    private final JScrollPane scrNotes = new JScrollPane(txtaNotes);
+    private final DateChooser dcCompletedDate = new DateChooser();
+    private final DateChooser dcReleaseDate = new DateChooser();
+    private final JButton btnSave = new JButton("Guardar");
+    private final AddGameController controller;
 
     public AddGame(Window window, AddGameController ag, boolean modal) {
         super(window, true);
@@ -128,16 +128,113 @@ public class AddGame extends JDialog {
         cbPlatform.addItem(value);
     }
 
-    public String getSpinGameTimeValue() {
-        return spinGameTime.getValue().toString();
-    }
-
     public void showPopupCompletedDate() {
         dcCompletedDate.showPopup();
     }
 
     public void showPopupReleaseDate() {
         dcReleaseDate.showPopup();
+    }
+
+    public String getTxtNameString() {
+        return txtGameName.getText();
+    }
+
+    public String getTxtReleaseDate() {
+        return txtReleaseDate.getText();
+    }
+
+    public String getTxtDeveloper() {
+        return txtDeveloper.getText();
+    }
+
+    public String getTxtPublisher() {
+        return txtPublisher.getText();
+    }
+
+    public String getTxtSeries() {
+        return txtSeries.getText();
+    }
+
+    public String getTxtStatus() {
+        return txtStatus.getText();
+    }
+
+    public String getTxtPlayMode() {
+        return txtPlayMode.getText();
+    }
+
+    public String getTxtVersion() {
+        return txtVersion.getText();
+    }
+
+    public String getTxtRegion() {
+        return txtRegion.getText();
+    }
+
+    public String getTxtPath() {
+        return txtPath.getText();
+    }
+
+    public String getTxtCompletedDateString() {
+        return txtCompletedDate.getText();
+    }
+
+    public String getTxtLastPlayed() {
+        return txtLastPlayed.getText();
+    }
+
+    public String getTxtaNotes() {
+        return txtaNotes.getText();
+    }
+
+    public boolean getFavoriteState() {
+        if(chFavorite.isSelected()) return true;
+        else return false;
+    }
+
+    public boolean getCompletedState() {
+        if(chCompleted.isSelected()) return true;
+        else return false;
+    }
+
+    public boolean getStatisticState() {
+        if(chStatistic.isSelected()) return true;
+        else return false;
+    }
+
+    public boolean getPortableState() {
+        if(chPortable.isSelected()) return true;
+        else return false;
+    }
+
+    public boolean getHideState() {
+        if(chHide.isSelected()) return true;
+        else return false;
+    }
+
+    public String getRatingValueString() {
+        return cbRating.getSelectedItem().toString();
+    }
+
+    public String getCbPlatformString() {
+        return cbPlatform.getSelectedItem().toString();
+    }
+
+    public String getCbLibraryString() {
+        return cbLibrary.getSelectedItem().toString();
+    }
+
+    public String getCbCategoryString() {
+        return cbCategory.getSelectedItem().toString();
+    }
+
+    public int getSpinScoreValue() {
+        return Integer.parseInt(spinScore.getValue().toString());
+    }
+
+    public int getSpinGameTimeValue() {
+        return Integer.parseInt(spinGameTime.getValue().toString());
     }
 
     public void initComponents() {
@@ -384,5 +481,17 @@ public class AddGame extends JDialog {
         txtModified.setEditable(false);
         txtaNotes.setLineWrap(true);
         txtaNotes.setWrapStyleWord(true);
+
+        loadRating();
+    }
+
+    public void loadRating() {
+        cbRating.addItem("E - Everyone");
+        cbRating.addItem("E10+ - Everyone 10+");
+        cbRating.addItem("T - Teen");
+        cbRating.addItem("M - Mature 17+");
+        cbRating.addItem("A - Adults Only 18+");
+        cbRating.addItem("EC - Early Childhood");
+        cbRating.addItem("RP - Rating Pending");
     }
 }

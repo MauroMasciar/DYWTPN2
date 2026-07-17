@@ -16,7 +16,7 @@ import javax.swing.Timer;
 public class PlayingController implements ChronometerListener {
     private final Games game;
     private Chronometer view;
-    private ChronometerService ch;
+    private ChronometerService chronometerService;
     private boolean game_init = false;
     private LocalDateTime startTime = LocalDateTime.now();
     private DateTimeFormatter format_time = DateTimeFormatter.ofPattern("HH:mm");
@@ -33,9 +33,9 @@ public class PlayingController implements ChronometerListener {
         desktopPane.add(view);
 
         // Iniciamos listener del cronometro
-        ch = new ChronometerService();
-        ch.setListener(this);
-        ch.start();
+        chronometerService = new ChronometerService();
+        chronometerService.setListener(this);
+        chronometerService.start();
 
         // Cargamos datos a la vista
         view.setGameName(game.getName());
@@ -43,8 +43,13 @@ public class PlayingController implements ChronometerListener {
         view.setTotalPlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed(), true));
         view.setTotalPlayedAfterSession(Utils.getTotalHoursFromSeconds(game.getTimePlayed(), false));
         view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(0, false));
-        view.setAvgTimePlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed() / game.getPlayCount(), false));
-        timerStrobe = new Timer(500, e -> view.strobe(ch.isPaused()));
+        try {
+            view.setAvgTimePlayed(Utils.getTotalHoursFromSeconds(game.getTimePlayed() / game.getPlayCount(), false));
+        } catch (Exception ex) {
+            view.setAvgTimePlayed("00h 00m");
+        }
+        
+        timerStrobe = new Timer(500, e -> view.strobe(chronometerService.isPaused()));
         
 
         // Asignamos listener a los componentes
@@ -60,23 +65,23 @@ public class PlayingController implements ChronometerListener {
     }
 
     public void pauseSession() {
-        if(ch.isPaused()) {
-            ch.setPaused(false);
+        if(chronometerService.isPaused()) {
+            chronometerService.setPaused(false);
             view.btnPauseText("Pausar");
             Toast.showToast(desktopPane, "Cronómetro corriendo");
             timerStrobe.stop();
         } else {
-            ch.setPaused(true);
-            view.setPauseCount(String.valueOf(ch.getPauseCount()));
+            chronometerService.setPaused(true);
+            view.setPauseCount(String.valueOf(chronometerService.getPauseCount()));
             view.btnPauseText("Reanudar");
             Toast.showToast(desktopPane, "Cronómetro en pausa");
             timerStrobe.start();
         }
-        view.strobe(ch.isPaused());
+        view.strobe(chronometerService.isPaused());
     }
 
     public void endSession() {
-        ch.stop();
+        chronometerService.stop();
         timerStrobe.stop();
         game.setTimePlayed(game.getTimePlayed() + playedSeconds);
         if(playedSeconds > 300) saveGame();
