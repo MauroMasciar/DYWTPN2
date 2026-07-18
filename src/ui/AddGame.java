@@ -1,6 +1,5 @@
 package ui;
 
-import controller.AddGameController;
 import util.Utils;
 import util.Validations;
 
@@ -85,13 +84,11 @@ public class AddGame extends JDialog {
     private final DateChooser dcCompletedDate = new DateChooser();
     private final DateChooser dcReleaseDate = new DateChooser();
     private final JButton btnSave = new JButton("Guardar");
-    private final AddGameController controller;
 
-    public AddGame(Window window, AddGameController ag, boolean modal) {
+    public AddGame(Window window, boolean modal) {
         super(window, true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir nuevo juego");
-        this.controller = ag;
 
         initComponents();
     }

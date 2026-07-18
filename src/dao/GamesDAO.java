@@ -38,6 +38,18 @@ public class GamesDAO {
 	    return games;
 	}
 
+	public int getTotalTimePlayed() {
+		String query = "SELECT SUM(time_played) AS time_played FROM games";
+		try(Connection con = DriverManager.getConnection(url);
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ResultSet rs = ps.executeQuery()) {
+				return rs.getInt("time_played");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public void add(Games game) {
 		String query = "INSERT INTO games (name, category, library, score, time_played, play_count, completed, completed_date, hidden, path, release_date, developer, series, play_mode, status, last_played, rating, platform, publisher, region, version, added, modified, favorite, statistic, portable, image, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = DriverManager.getConnection(url);

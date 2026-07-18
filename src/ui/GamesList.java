@@ -5,15 +5,14 @@ import controller.PlayingController;
 import model.Games;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,18 +22,16 @@ public class GamesList extends JInternalFrame implements ActionListener {
 	
 	// Panel ListGames
 	private JTextField txtSearchGame = new JTextField();
-	private JLabel lblMyGames = new JLabel("Mis juegos");
-	private JButton btnFilter = new JButton("F"); //TO DO: poner icono de filtro
 	private JButton btnLaunch = new JButton("Lanzar");
 	private JList<Games> jlistGames = new JList<>();
+	private JScrollPane scrollPane = new JScrollPane(jlistGames);
 	private DefaultListModel<Games> model = new DefaultListModel<>();
 	
 	
 	public GamesList(JDesktopPane desktopPane) {
 		this.desktopPane = desktopPane;
-		setSize(800, 600);
-		GridBagConstraints gbcListGames = new GridBagConstraints();
-		JPanel pnlListGames = new JPanel();
+		setSize(300, 600);
+		//GridBagConstraints gbcListGames = new GridBagConstraints();
 		jlistGames.setModel(model);
 		jlistGames.setCellRenderer(new GameRenderer());
 		
@@ -42,15 +39,15 @@ public class GamesList extends JInternalFrame implements ActionListener {
 			model.addElement(game);
 		}
 
-		pnlListGames.setLayout(new FlowLayout());
-		pnlListGames.add(btnLaunch);
-		pnlListGames.add(jlistGames);
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(txtSearchGame, BorderLayout.NORTH);
+		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(btnLaunch, BorderLayout.SOUTH);
 
-		add(pnlListGames);
+		add(panel);
 
 		btnLaunch.addActionListener(this);
-		
-		//pack();
+
 		setVisible(true);
 	}
 

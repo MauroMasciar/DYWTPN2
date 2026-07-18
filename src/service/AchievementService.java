@@ -1,16 +1,17 @@
 package service;
 
-import app.Main;
 import controller.AchievementController;
 import model.Games;
 import util.Utils;
 
 public class AchievementService {
     private AchievementController achievementController;
+    private PlayerService playerService;
     private Games game;
 
     public AchievementService(Games game) {
         this.game = game;
+        playerService = new PlayerService();
         achievementController = new AchievementController();
     }
 
@@ -44,7 +45,7 @@ public class AchievementService {
 
         achievement = "";
 
-        int totalSecondsPlayed = (playedSeconds + Main.playerRepository.players_list.get(0).getTimePlayed());
+        int totalSecondsPlayed = (playedSeconds + playerService.getTotalTimePlayed());
 
         if(totalSecondsPlayed % 60 == 0) {
             if(totalSecondsPlayed == Utils.SECONDS_PER_HOUR) achievement = "Has alcanzado tu primera hora de juego en total";

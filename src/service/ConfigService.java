@@ -33,7 +33,6 @@ public class ConfigService {
 			e.printStackTrace();
 		}
         
-        String value = prop.getProperty(key);
-        return value;
+        return prop.getProperty(key);
 	}
 }

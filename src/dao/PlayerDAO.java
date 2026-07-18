@@ -22,7 +22,7 @@ private final String url = "jdbc:sqlite:database.db";
 	        ResultSet rs = ps.executeQuery()) {
 
             while(rs.next()) {
-                Player player = new Player(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"));
+                Player player = new Player(rs.getInt("id"), rs.getString("name"), rs.getString("last_game"), rs.getString("last_session_time"));
                 player_list.add(player);
             }
         } catch(SQLException e) {

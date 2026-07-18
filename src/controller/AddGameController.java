@@ -12,8 +12,9 @@ import util.Utils;
 public class AddGameController {
     private AddGame view;
     private AddGameService addGameService;
+    
     public AddGameController(Window window) {
-        view = new AddGame(window, this, true);
+        view = new AddGame(window, true);
         addGameService = new AddGameService(view);
 
         loadCategories();
