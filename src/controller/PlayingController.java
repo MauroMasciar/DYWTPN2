@@ -4,10 +4,10 @@ import service.ChronometerListener;
 import service.ChronometerService;
 import service.Toast;
 import service.AchievementService;
+import service.AddSessionService;
 import model.Games;
 import ui.Chronometer;
 import util.Utils;
-import dao.GamesDAO;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +19,6 @@ public class PlayingController implements ChronometerListener {
     private Chronometer view;
     private ChronometerService chronometerService;
     private AchievementService achievementService;
-    private boolean game_init = false;
     private LocalDateTime startTime = LocalDateTime.now();
     private DateTimeFormatter format_time = DateTimeFormatter.ofPattern("HH:mm");
     private int playedSeconds;
@@ -63,11 +62,6 @@ public class PlayingController implements ChronometerListener {
         Toast.showToast(desktopPane, "Juego lanzado");
     }
 
-    private void saveGame() {
-        GamesDAO gameDao = new GamesDAO();
-        gameDao.update(game);
-    }
-
     public void pauseSession() {
         if(chronometerService.isPaused()) {
             chronometerService.setPaused(false);
@@ -87,8 +81,10 @@ public class PlayingController implements ChronometerListener {
     public void endSession() {
         chronometerService.stop();
         timerStrobe.stop();
-        game.setTimePlayed(game.getTimePlayed() + playedSeconds);
-        if(playedSeconds > 300) saveGame();
+        if(playedSeconds > 300) {
+            AddSessionService addSessionService = new AddSessionService();
+            addSessionService.addSession(game, startTime, playedSeconds);
+        }
         view.dispose();
     }
 
@@ -98,11 +94,6 @@ public class PlayingController implements ChronometerListener {
         view.setTime(Utils.getTotalHoursFromSeconds(playedSeconds, true));
         view.setTimePaused(Utils.getTotalHoursFromSeconds(pausedSeconds, true));
         view.setTimeTotal(Utils.getTotalHoursFromSeconds(pausedSeconds + playedSeconds, true));
-        if(!game_init & playedSeconds == 300) {
-            game_init = true;
-            game.setPlayCount(game.getPlayCount() + 1);
-            saveGame();
-        }
         achievementService.checkInGame(playedSeconds);
     }
 

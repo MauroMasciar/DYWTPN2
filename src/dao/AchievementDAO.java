@@ -32,14 +32,13 @@ public class AchievementDAO {
     }
 
     public void add(Achievements achievements) {
-        String query = "INSERT INTO achievements (id, game_name, game_id, description, date) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO achievements (game_name, game_id, description, date) VALUES (?, ?, ?, ?)";
 		try (Connection con = DriverManager.getConnection(url);
 			 PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, achievements.getId());
-            ps.setString(2, achievements.getGameName());
-            ps.setInt(3, achievements.getGameId());
-            ps.setString(4, achievements.getDescription());
-            ps.setString(5, achievements.getDate());
+            ps.setString(1, achievements.getGameName());
+            ps.setInt(2, achievements.getGameId());
+            ps.setString(3, achievements.getDescription());
+            ps.setString(4, achievements.getDate());
 
 			int rowsAffected = ps.executeUpdate();
 			if(rowsAffected != 0) System.out.println("Logro añadido");
@@ -47,9 +46,5 @@ public class AchievementDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    }
-
-    public void delete() {
-
     }
 }

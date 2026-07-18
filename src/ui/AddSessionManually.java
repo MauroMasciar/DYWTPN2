@@ -12,8 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import com.raven.datechooser.DateChooser;
-
-import model.Games;
 import raven.datetime.component.time.TimePicker;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

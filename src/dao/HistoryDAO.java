@@ -1,6 +1,5 @@
 package dao;
 
-import model.Achievements;
 import model.History;
 
 import java.sql.Connection;

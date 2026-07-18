@@ -1,38 +1,20 @@
 package service;
 
 import app.Main;
+import model.Games;
 
 public class GameService {
-    public int findIdByName(String name) {
-        for(int i=0; i<Main.gameRepository.games_list.size(); i++) {
-            if(Main.gameRepository.games_list.get(i).getName().equals(name)) return Main.gameRepository.games_list.get(i).getId();
+    public Games findById(int id) {
+        for (Games game : Main.gameRepository.games_list) {
+            if(game.getId() == id) return game;
         }
-        return 0;
-    }
-        
-    public String findNameById(int id) {
-        for(int i=0; i<Main.gameRepository.games_list.size(); i++) {
-            if(Main.gameRepository.games_list.get(i).getId() == id) return Main.gameRepository.games_list.get(i).getName();
-        }
-        return "ERROR";
+        return null;
     }
 
-    public int findPlatformById(int id) {
-        for(int i=0; i<Main.gameRepository.games_list.size(); i++) {
-            if(Main.gameRepository.games_list.get(i).getId() == id) return Main.gameRepository.games_list.get(i).getPlatform();
+    public Games findByName(String name) {
+        for (Games game : Main.gameRepository.games_list) {
+            if(game.getName().equals(name)) return game;
         }
-        return 0;
+        return null;
     }
-
-    public int findLibraryById(int id) {
-        for(int i=0; i<Main.gameRepository.games_list.size(); i++) {
-            if(Main.gameRepository.games_list.get(i).getId() == id) return Main.gameRepository.games_list.get(i).getLibrary();
-        }
-        return 0;
-    }
-
-    /*public Games searchGame() {
-        for(int i=0; i<Main.gameRepository.)
-        return games;
-    }*/
 }
