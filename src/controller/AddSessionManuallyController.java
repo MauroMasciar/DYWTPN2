@@ -16,10 +16,23 @@ public class AddSessionManuallyController {
         view = new AddSessionManually(window, true);
         addSessionService = new AddSessionService();
         
-        view.setBtnAddListener(e -> addSessionService.AddSessionManually(view.getGameSelectedString(), view.getTimeString(), view.getDateString(), view.getHourString()));
+        view.setBtnAddListener(e -> add());
 
         fillComboBoxGames();
         view.setVisible(true);
+    }
+
+    public void add() {
+        String gameName = view.getGameSelectedString();
+        String time = view.getTimeString();
+        String date = view.getDateString();
+        String hour = view.getHourString();
+
+        if(Integer.parseInt(time) <= 0) {
+            view.showError("El tiempo de juego debe ser mayor a 0");
+        } else {
+            addSessionService.AddSessionManually(gameName, time, date, hour);
+        }
     }
 
     public void fillComboBoxGames() {

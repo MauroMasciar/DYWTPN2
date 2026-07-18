@@ -41,6 +41,14 @@ public class AddSessionManually extends JDialog {
         initComponents();
     }
 
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showInfo(String message) {
+        JOptionPane.showMessageDialog(this, message, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public void cbGameAddItem(String value) {
         cbGame.addItem(value);
     }
@@ -118,22 +126,5 @@ public class AddSessionManually extends JDialog {
         dcDate.setDateFormat("yyyy-MM-dd");
         dcDate.setTextRefernce(txtDate);
         timePicker.setEditor(txtTime);
-    }
-
-    public void actionPerformed() {
-        //if(e.getSource() == btnAdd) {
-            if((Integer) spinTime.getValue() == 0) {
-                JOptionPane.showMessageDialog(this, "Debes especificar cuanto tiempo jugaste", "Faltan datos", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            //int minsPlayed = (Integer) spinTime.getValue();
-            //int gameId = mg.getIdFromGameName(cbGame.getSelectedItem().toString());
-            //String date = txtDate.getText() + " " + timePicker.getSelectedTime() + ":00";
-            //mg.saveSession(gameId, minsPlayed*60, date);
-            JOptionPane.showMessageDialog(this, "La sesión de juego se ha agregado satisfactoriamente", "Sesión añadida", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        //} else if(e.getSource() == txtDate) {
-            dcDate.showPopup();
-        //}
     }
 }
