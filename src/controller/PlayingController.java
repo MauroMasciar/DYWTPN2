@@ -2,6 +2,7 @@ package controller;
 
 import service.ChronometerListener;
 import service.ChronometerService;
+import service.PlayingService;
 import service.Toast;
 import service.AchievementService;
 import service.AddSessionService;
@@ -19,6 +20,7 @@ public class PlayingController implements ChronometerListener {
     private Chronometer view;
     private ChronometerService chronometerService;
     private AchievementService achievementService;
+    private PlayingService playingService;
     private LocalDateTime startTime = LocalDateTime.now();
     private DateTimeFormatter format_time = DateTimeFormatter.ofPattern("HH:mm");
     private int playedSeconds;
@@ -40,6 +42,7 @@ public class PlayingController implements ChronometerListener {
 
         // Instanciamos services
         achievementService = new AchievementService(game);
+        playingService = new PlayingService();
 
         // Cargamos datos a la vista
         view.setGameName(game.getName());
@@ -101,5 +104,6 @@ public class PlayingController implements ChronometerListener {
     public void notifyMinuteElapsed(int seconds) {
         view.setTotalFutureTime(Utils.getTotalHoursFromSeconds(game.getTimePlayed() + seconds, false));
         view.setAgeSession("Iniciado a las " + startTime.format(format_time) + " hace " + Utils.getTotalHoursFromSeconds(seconds, false));
+        playingService.saveBackup(game.getId(), startTime.toString(), seconds);
     }
 }
