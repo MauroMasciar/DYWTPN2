@@ -53,8 +53,6 @@ public class Chronometer extends JInternalFrame {
         //this.controller = playingController;
     	initComponents();
 
-		
-
         pack();
 
 		setVisible(true);

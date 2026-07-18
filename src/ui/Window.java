@@ -2,6 +2,7 @@ package ui;
 
 import app.Main;
 import controller.AddGameController;
+import controller.AddSessionManuallyController;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -79,6 +80,9 @@ public class Window extends JFrame implements ActionListener {
 		if(e.getSource() == mnuiGamesAdd) {
             @SuppressWarnings("unused")
             AddGameController addGameController = new AddGameController(this);
+        } else if(e.getSource() == mnuiPlayerAddSession) {
+            @SuppressWarnings("unused")
+            AddSessionManuallyController addSessionController = new AddSessionManuallyController(this);
         } else if(e.getSource() == mnuiHelpAbout) {
             @SuppressWarnings("unused")
             About about = new About(this, true);

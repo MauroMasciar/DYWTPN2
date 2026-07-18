@@ -10,8 +10,8 @@ public class PlatformsRepository {
     public List<Platforms> platforms_list = new ArrayList<>();
 
     public PlatformsRepository() {
-        PlatformDAO repositoriesDao = new PlatformDAO();
-        platforms_list = repositoriesDao.getAll();
+        PlatformDAO platformDao = new PlatformDAO();
+        platforms_list = platformDao.getAll();
     }
 
     public List<Platforms> getList() {

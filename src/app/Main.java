@@ -3,6 +3,7 @@ package app;
 import repository.AchievementRepository;
 import repository.CategoryRepository;
 import repository.GameRepository;
+import repository.HistoryRepository;
 import repository.LibraryRepository;
 import repository.PlatformsRepository;
 import repository.PlayerRepository;
@@ -20,6 +21,7 @@ public class Main {
     public static LibraryRepository librariesRepository;
     public static PlatformsRepository platformsRepository;
     public static AchievementRepository achievementsRepository;
+    public static HistoryRepository historyRepository;
     
     @SuppressWarnings("unused")
     public static void main(String[] args) {
@@ -35,6 +37,7 @@ public class Main {
         librariesRepository = new LibraryRepository();
         platformsRepository = new PlatformsRepository();
         achievementsRepository = new AchievementRepository();
+        historyRepository = new HistoryRepository();
 
         // Se inicia la ventana principal
         Window mw = new Window();
