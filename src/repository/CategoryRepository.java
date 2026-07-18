@@ -1,6 +1,6 @@
 package repository;
 
-import dao.CategoriesDAO;
+import dao.CategoryDAO;
 import model.Categories;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class CategoryRepository {
     public List<Categories> categories_list = new ArrayList<>();
 
     public CategoryRepository() {
-        CategoriesDAO categoryDao = new CategoriesDAO();
+        CategoryDAO categoryDao = new CategoryDAO();
         categories_list = categoryDao.getAll();
     }
 

@@ -3,6 +3,7 @@ package controller;
 import service.ChronometerListener;
 import service.ChronometerService;
 import service.Toast;
+import service.AchievementService;
 import model.Games;
 import ui.Chronometer;
 import util.Utils;
@@ -14,9 +15,10 @@ import javax.swing.JDesktopPane;
 import javax.swing.Timer;
 
 public class PlayingController implements ChronometerListener {
-    private final Games game;
+    private Games game;
     private Chronometer view;
     private ChronometerService chronometerService;
+    private AchievementService achievementService;
     private boolean game_init = false;
     private LocalDateTime startTime = LocalDateTime.now();
     private DateTimeFormatter format_time = DateTimeFormatter.ofPattern("HH:mm");
@@ -37,6 +39,9 @@ public class PlayingController implements ChronometerListener {
         chronometerService.setListener(this);
         chronometerService.start();
 
+        // Instanciamos services
+        achievementService = new AchievementService(game);
+
         // Cargamos datos a la vista
         view.setGameName(game.getName());
         view.setPlayCount(String.valueOf(game.getPlayCount()));
@@ -50,7 +55,6 @@ public class PlayingController implements ChronometerListener {
         }
         
         timerStrobe = new Timer(500, e -> view.strobe(chronometerService.isPaused()));
-        
 
         // Asignamos listener a los componentes
         view.setBtnPauseListener(e -> pauseSession());
@@ -99,6 +103,7 @@ public class PlayingController implements ChronometerListener {
             game.setPlayCount(game.getPlayCount() + 1);
             saveGame();
         }
+        achievementService.checkInGame(playedSeconds);
     }
 
     @Override

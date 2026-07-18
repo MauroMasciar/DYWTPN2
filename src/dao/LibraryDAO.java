@@ -8,27 +8,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Categories;
+import model.Libraries;
 
-public class CategoriesDAO {
+public class LibraryDAO {
     private final String url = "jdbc:sqlite:database.db";
     
-    public List<Categories> getAll() {
-        List<Categories> categories = new ArrayList<>();
-        String query = "SELECT * FROM category ORDER BY id";
+    public List<Libraries> getAll() {
+        List<Libraries> libraries = new ArrayList<>();
+        String query = "SELECT * FROM library ORDER BY id";
 
         try(Connection con = DriverManager.getConnection(url);
 	        PreparedStatement ps = con.prepareStatement(query);
 	        ResultSet rs = ps.executeQuery()) {
 
             while(rs.next()) {
-                Categories category = new Categories(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"), rs.getInt("total_sessions"));
-                categories.add(category);
+                Libraries library = new Libraries(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"), rs.getInt("total_sessions"));
+                libraries.add(library);
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return categories;
+        return libraries;
     }
 
     public void add() {

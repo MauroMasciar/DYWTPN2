@@ -7,6 +7,8 @@ import java.time.LocalTime;
 
 public class Utils {
 	public static final String COLOR_GREEN = "#48bd4e";
+    public static final int SECONDS_PER_HOUR = 3600;
+    
     public static String getFormattedDate() {
         String date;
         date = LocalDate.now().getYear() + "-" + LocalDate.now().getMonthValue() + "-" + LocalDate.now().getDayOfMonth();

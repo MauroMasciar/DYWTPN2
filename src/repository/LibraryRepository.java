@@ -1,16 +1,16 @@
 package repository;
 
-import dao.LibrariesDAO;
+import dao.LibraryDAO;
 import model.Libraries;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibrariesRepository {
+public class LibraryRepository {
 public List<Libraries> library_list = new ArrayList<>();
 
-    public LibrariesRepository() {
-        LibrariesDAO libraryDao = new LibrariesDAO();
+    public LibraryRepository() {
+        LibraryDAO libraryDao = new LibraryDAO();
         library_list = libraryDao.getAll();
     }
 

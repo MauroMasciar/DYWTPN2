@@ -8,27 +8,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Platforms;
+import model.Player;
 
-public class PlatformsDAO {
-    private final String url = "jdbc:sqlite:database.db";
+public class PlayerDAO {
+private final String url = "jdbc:sqlite:database.db";
     
-    public List<Platforms> getAll() {
-        List<Platforms> Platforms = new ArrayList<>();
-        String query = "SELECT * FROM platforms ORDER BY id";
+    public List<Player> getAll() {
+        List<Player> player_list = new ArrayList<>();
+        String query = "SELECT * FROM players ORDER BY id";
 
         try(Connection con = DriverManager.getConnection(url);
 	        PreparedStatement ps = con.prepareStatement(query);
 	        ResultSet rs = ps.executeQuery()) {
 
             while(rs.next()) {
-                Platforms platforms = new Platforms(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"), rs.getInt("total_sessions"));
-                Platforms.add(platforms);
+                Player player = new Player(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"));
+                player_list.add(player);
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return Platforms;
+        return player_list;
     }
 
     public void add() {

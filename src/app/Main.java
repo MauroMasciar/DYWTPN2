@@ -1,9 +1,11 @@
 package app;
 
+import repository.AchievementRepository;
 import repository.CategoryRepository;
 import repository.GameRepository;
-import repository.LibrariesRepository;
+import repository.LibraryRepository;
 import repository.PlatformsRepository;
+import repository.PlayerRepository;
 import ui.Window;
 
 import javax.swing.UIManager;
@@ -11,11 +13,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 public class Main {
-    public static final String VERSION_APP = "2.0.0.8";
+    public static final String VERSION_APP = "2.0.0.9";
+    public static PlayerRepository playerRepository;
     public static GameRepository gameRepository;
     public static CategoryRepository categoryRepository;
-    public static LibrariesRepository librariesRepository;
+    public static LibraryRepository librariesRepository;
     public static PlatformsRepository platformsRepository;
+    public static AchievementRepository achievementsRepository;
     
     @SuppressWarnings("unused")
     public static void main(String[] args) {
@@ -25,12 +29,12 @@ public class Main {
             e.printStackTrace();
         }
         // Se inician los repositorios
+        playerRepository = new PlayerRepository();
         gameRepository = new GameRepository();
         categoryRepository = new CategoryRepository();
-        librariesRepository = new LibrariesRepository();
+        librariesRepository = new LibraryRepository();
         platformsRepository = new PlatformsRepository();
-
-        
+        achievementsRepository = new AchievementRepository();
 
         // Se inicia la ventana principal
         Window mw = new Window();

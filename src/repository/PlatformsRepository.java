@@ -1,6 +1,6 @@
 package repository;
 
-import dao.PlatformsDAO;
+import dao.PlatformDAO;
 import model.Platforms;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class PlatformsRepository {
     public List<Platforms> platforms_list = new ArrayList<>();
 
     public PlatformsRepository() {
-        PlatformsDAO repositoriesDao = new PlatformsDAO();
+        PlatformDAO repositoriesDao = new PlatformDAO();
         platforms_list = repositoriesDao.getAll();
     }
 
