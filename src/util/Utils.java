@@ -1,12 +1,23 @@
 package util;
 
+import java.awt.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class Utils {
 	public static final String COLOR_GREEN = "#48bd4e";
+    public static final int MINIMUN_SESSION_SECONDS = 300;
     public static final int SECONDS_PER_HOUR = 3600;
     
     public static String getFormattedDate() {
@@ -136,5 +147,48 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static void autoSizeTable(JTable table) {
+        for (int columna = 0; columna < table.getColumnCount(); columna++) {
+            TableColumn tableColumn = table.getColumnModel().getColumn(columna);
+            int anchoMaximo = 0;
+            TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = table.getTableHeader().getDefaultRenderer();
+            }
+            Component header = headerRenderer.getTableCellRendererComponent(table, tableColumn.getHeaderValue(), false, false, 0, columna);
+
+            anchoMaximo = header.getPreferredSize().width;
+            for (int fila = 0; fila < table.getRowCount(); fila++) {
+                TableCellRenderer renderer = table.getCellRenderer(fila, columna);
+                Component component = table.prepareRenderer(renderer, fila, columna);
+                anchoMaximo = Math.max(anchoMaximo, component.getPreferredSize().width );
+            }
+            
+            tableColumn.setPreferredWidth(anchoMaximo + 10);
+        }
+    }
+    
+    public static String formatDateFromString(String dateString, int option) {
+        List<String> fechasLista = Arrays.asList(dateString);
+        DateTimeFormatter formateadorFlexible = new DateTimeFormatterBuilder()
+                .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                .appendOptional(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                .appendOptional(DateTimeFormatter.ofPattern("yyyy/MM/dd'T'HH:mm:ss"))
+                .appendOptional(DateTimeFormatter.ISO_DATE_TIME)
+                .toFormatter();
+
+        DateTimeFormatter formatoSalida = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm");
+        String resultado = "";
+        for (String fechaTexto : fechasLista) {
+            try {
+                LocalDateTime fecha = LocalDateTime.parse(fechaTexto, formateadorFlexible);
+                resultado = fecha.format(formatoSalida);                
+            } catch (Exception e) {
+                System.out.println("Error: No se pudo procesar el formato de -> " + fechaTexto);
+            }
+        }
+        return resultado;
     }
 }

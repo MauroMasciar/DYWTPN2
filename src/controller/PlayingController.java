@@ -70,7 +70,7 @@ public class PlayingController implements ChronometerListener {
             chronometerService.setPaused(false);
             view.btnPauseText("Pausar");
             Toast.showToast(desktopPane, "Cronómetro corriendo");
-            timerStrobe.stop();
+            if(timerStrobe != null) timerStrobe.stop();
         } else {
             chronometerService.setPaused(true);
             view.setPauseCount(String.valueOf(chronometerService.getPauseCount()));
@@ -83,8 +83,8 @@ public class PlayingController implements ChronometerListener {
 
     public void endSession() {
         chronometerService.stop();
-        timerStrobe.stop();
-        if(playedSeconds > 300) {
+        if(timerStrobe != null) timerStrobe.stop();
+        if(playedSeconds > Utils.MINIMUN_SESSION_SECONDS) {
             AddSessionService addSessionService = new AddSessionService();
             addSessionService.addSession(game, startTime, playedSeconds);
         }

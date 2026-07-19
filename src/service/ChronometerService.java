@@ -9,8 +9,8 @@ public class ChronometerService {
     private int totalSecondsPlaying;
     private int totalSecondsPaused;
     private int pauseCount;
-    private boolean active = true;
-    private boolean pause = false;
+    private boolean isRunning = true;
+    private boolean isPaused = false;
     private Timer t;
     private LocalDateTime playStart;
     private LocalDateTime pauseStart;
@@ -21,9 +21,9 @@ public class ChronometerService {
     	t.start();
     }
 
-    public void run() {
-        if(active) {
-            if(!pause) {
+    private void run() {
+        if(isRunning) {
+            if(!isPaused) {
                 int currentPlaying = (int) ChronoUnit.SECONDS.between(playStart, LocalDateTime.now());
                 int totalPlaying = totalSecondsPlaying + currentPlaying;
 
@@ -37,10 +37,10 @@ public class ChronometerService {
         }
     }
 
-    public void notifyTime(int playing_time, int pause_time) {
+    private void notifyTime(int playing_time, int pause_time) {
         if(listener != null) {
             listener.timeUpdate(playing_time, pause_time);
-            if(playing_time % 60 == 0 && playing_time != 0 && !pause) listener.notifyMinuteElapsed(playing_time);
+            if(playing_time % 60 == 0 && playing_time != 0 && !isPaused) listener.notifyMinuteElapsed(playing_time);
         }
     }
 
@@ -49,17 +49,17 @@ public class ChronometerService {
     }
 
     public void stop() {
-        active = false;
-        t.stop();
+        isRunning = false;
+        if(t != null) t.stop();
     }
 
     public boolean isPaused() {
-        return pause;
+        return isPaused;
     }
 
     public void setPaused(boolean p) {
-        pause = p;
-        if(pause) {
+        isPaused = p;
+        if(isPaused) {
             pauseStart = LocalDateTime.now();
             totalSecondsPlaying += ChronoUnit.SECONDS.between(playStart, LocalDateTime.now());
             pauseCount++;

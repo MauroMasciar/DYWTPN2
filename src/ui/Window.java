@@ -71,6 +71,8 @@ public class Window extends JFrame implements ActionListener {
 		initComponents();
     
         add(new GamesList(desktopPane));
+        //add(new GeneralSummary());
+        add(new SessionsHistory());
         
 		setVisible(true);
 	}

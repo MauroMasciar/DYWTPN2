@@ -5,6 +5,7 @@ import controller.HistoryController;
 import dao.GamesDAO;
 import model.Games;
 import model.History;
+import ui.SessionsHistory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,5 +42,6 @@ public class AddSessionService {
         Main.historyRepository.getList().add(history);
         HistoryController historyController = new HistoryController();
         historyController.add(history);
+        SessionsHistory.updateTableModel();
     }
 }
