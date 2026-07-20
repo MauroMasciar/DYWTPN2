@@ -68,8 +68,7 @@ class HistoryTableModel extends AbstractTableModel {
         switch(columnIndex) {
             case 0: return list.get(rowIndex).getGameName();
             case 1: return Utils.getTotalHoursFromSeconds(list.get(rowIndex).getSeconds(), true);
-            case 2: return Utils.formatDateFromString(list.get(rowIndex).getDateTimeStart(), 1);
-            
+            case 2: return Utils.formatDateFromString(list.get(rowIndex).getDateTimeStart());
         }
         return "";
     }

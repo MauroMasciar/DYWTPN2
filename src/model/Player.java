@@ -5,12 +5,16 @@ public class Player {
     private String name;
     private String lastGame;
     private String lastSessionTime;
+    private int totalSessions;
+    private int timePlayed;
 
-    public Player(int id, String name, String lastGame, String lastSessionTime) {
+    public Player(int id, String name, String lastGame, String lastSessionTime, int totalSessions, int timePlayed) {
         this.id = id;
         this.name = name;
         this.lastGame = lastGame;
         this.lastSessionTime = lastSessionTime;
+        this.totalSessions = totalSessions;
+        this.timePlayed = timePlayed;
     }
 
     public int getId() {
@@ -27,6 +31,22 @@ public class Player {
 
     public String getLastGame() {
         return lastGame;
+    }
+
+    public void setTotalSessions(int totalSessions) {
+        this.totalSessions = totalSessions;
+    }
+
+    public int getTotalSessions() {
+        return totalSessions;
+    }
+
+    public void setTimePlayed(int timePlayed) {
+        this.timePlayed = timePlayed;
+    }
+
+    public int getTimePlayed() {
+        return timePlayed;
     }
 
     public void setLastGame(String lastGame) {

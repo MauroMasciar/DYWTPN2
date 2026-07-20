@@ -10,14 +10,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class Utils {
 	public static final String COLOR_GREEN = "#48bd4e";
-    public static final int MINIMUN_SESSION_SECONDS = 300;
+    public static final int MINIMUN_SESSION_SECONDS = 1;
     public static final int SECONDS_PER_HOUR = 3600;
     
     public static String getFormattedDate() {
@@ -170,25 +169,25 @@ public class Utils {
         }
     }
     
-    public static String formatDateFromString(String dateString, int option) {
-        List<String> fechasLista = Arrays.asList(dateString);
-        DateTimeFormatter formateadorFlexible = new DateTimeFormatterBuilder()
+    public static String formatDateFromString(String dateString) {
+        List<String> dateArray = Arrays.asList(dateString);
+        DateTimeFormatter formatterFlex = new DateTimeFormatterBuilder()
                 .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 .appendOptional(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
                 .appendOptional(DateTimeFormatter.ofPattern("yyyy/MM/dd'T'HH:mm:ss"))
                 .appendOptional(DateTimeFormatter.ISO_DATE_TIME)
                 .toFormatter();
 
-        DateTimeFormatter formatoSalida = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm");
-        String resultado = "";
-        for (String fechaTexto : fechasLista) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm");
+        String result = "";
+        for (String fechaTexto : dateArray) {
             try {
-                LocalDateTime fecha = LocalDateTime.parse(fechaTexto, formateadorFlexible);
-                resultado = fecha.format(formatoSalida);                
+                LocalDateTime fecha = LocalDateTime.parse(fechaTexto, formatterFlex);
+                result = fecha.format(formatter);                
             } catch (Exception e) {
-                System.out.println("Error: No se pudo procesar el formato de -> " + fechaTexto);
+                System.out.println("Error: No se pudo procesar el formato de: " + fechaTexto);
             }
         }
-        return resultado;
+        return result;
     }
 }

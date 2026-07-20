@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.Main;
 import model.Platforms;
 
 public class PlatformDAO {
@@ -37,6 +38,21 @@ public class PlatformDAO {
 
     public void update() {
 
+    }
+
+    public void update(int i) {
+        String query = "UPDATE platforms SET time_played = ?, total_sessions = ? WHERE id = ?";
+		try (Connection con = DriverManager.getConnection(url);
+			 PreparedStatement ps = con.prepareStatement(query)) {
+
+                ps.setInt(1, Main.platformsRepository.platforms_list.get(i).getTimePlayed());
+                ps.setInt(2, Main.platformsRepository.platforms_list.get(i).getTotalSessions());
+                ps.setInt(3, i);
+			    int rowsAffected = ps.executeUpdate();
+			    if(rowsAffected != 0) System.out.println("Plataforma actualizada");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
     public void delete() {
