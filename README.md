@@ -3,6 +3,7 @@
 Gestor de videojuegos de código abierto con estadísticas, historial de sesiones, resúmenes y sincronización con el perfil en la web.
 
 Repositorio App: https://github.com/MauroMasciar/NewGamePlus
+
 Repositorio Web: Aún no disponible
 
 
