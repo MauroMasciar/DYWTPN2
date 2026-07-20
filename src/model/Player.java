@@ -2,62 +2,72 @@ package model;
 
 public class Player {
     private int id;
-    private String name;
-    private String lastGame;
-    private String lastSessionTime;
+    private String gameName;
+    private int lastGameSessionTime;
+    private int totalTime;
     private int totalSessions;
-    private int timePlayed;
+    private int totalStarted;
+    private int completed;
 
-    public Player(int id, String name, String lastGame, String lastSessionTime, int totalSessions, int timePlayed) {
+    public Player(int id, String gameName, int lastGameSessionTime, int totalTime, int totalSessions, int totalStarted, int completed) {
         this.id = id;
-        this.name = name;
-        this.lastGame = lastGame;
-        this.lastSessionTime = lastSessionTime;
+        this.gameName = gameName;
+        this.lastGameSessionTime = lastGameSessionTime;
+        this.totalTime = totalTime;
         this.totalSessions = totalSessions;
-        this.timePlayed = timePlayed;
+        this.totalStarted = totalStarted;
+        this.completed = completed;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
-    public String getLastGame() {
-        return lastGame;
+    public int getLastGameSessionTime() {
+        return lastGameSessionTime;
     }
 
-    public void setTotalSessions(int totalSessions) {
-        this.totalSessions = totalSessions;
+    public void setLastGameSessionTime(int lastGameSessionTime) {
+        this.lastGameSessionTime = lastGameSessionTime;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
     }
 
     public int getTotalSessions() {
         return totalSessions;
     }
 
-    public void setTimePlayed(int timePlayed) {
-        this.timePlayed = timePlayed;
+    public void setTotalSessions(int totalSessions) {
+        this.totalSessions = totalSessions;
     }
 
-    public int getTimePlayed() {
-        return timePlayed;
+    public int getTotalStarted() {
+        return totalStarted;
     }
 
-    public void setLastGame(String lastGame) {
-        this.lastGame = lastGame;
+    public void setTotalStarted(int totalStarted) {
+        this.totalStarted = totalStarted;
     }
 
-    public String getLastSessionTime() {
-        return lastSessionTime;
+    public int getCompleted() {
+        return completed;
     }
 
-    public void setLastSessionTime(String lastSessionTime) {
-        this.lastSessionTime = lastSessionTime;
+    public void setCompleted(int completed) {
+        this.completed = completed;
     }
 }

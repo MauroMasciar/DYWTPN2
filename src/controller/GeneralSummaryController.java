@@ -22,8 +22,8 @@ public class GeneralSummaryController {
     private void loadData() {
         view.setLblTotalTimeHoursValue(Utils.getTotalHoursFromSeconds(playerService.getTotalTimePlayed(), false));
         view.setlblTotalTimeDaysValue(Utils.getTotalDaysFromSeconds(playerService.getTotalTimePlayed()));
-        view.lblTotalGamesStartedValue("0");
-        view.lblCompletedValue("0");
+        view.lblTotalGamesStartedValue(String.valueOf(playerService.getTotalStartedGames()));
+        view.lblCompletedValue(String.valueOf(playerService.getTotalCompleted()));
         view.lblSessionsValue(String.valueOf(playerService.getTotalSessions()));
     }    
 }

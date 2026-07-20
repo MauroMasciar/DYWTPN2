@@ -6,7 +6,6 @@ import dao.CategoryDAO;
 import dao.GamesDAO;
 import dao.LibraryDAO;
 import dao.PlatformDAO;
-import dao.PlayerDAO;
 import model.Games;
 import model.History;
 import ui.SessionsHistory;
@@ -29,6 +28,7 @@ public class AddSessionService {
     }
 
     public void addSession(Games game, LocalDateTime dateTimeStart, int seconds) {
+        // TODO: Formatear dateTimeStart y dateTimeEnd
         LocalDateTime dateTimeEnd = dateTimeStart.plusSeconds(seconds);
         History history = new History(Main.achievementsRepository.getList().size() + 1, "NO",  game.getId(), game.getName(), game.getLibrary(), game.getPlatform(), dateTimeStart.toString(), dateTimeEnd.toString(), seconds);
         saveHistory(history);
@@ -93,11 +93,9 @@ public class AddSessionService {
     }
 
     private void plusPlayerTime(int seconds) {
-        int secondsPlayed = Main.playerRepository.players_list.get(0).getTimePlayed();
+        int secondsPlayed = Main.playerRepository.players_list.get(0).getTotalTime();
         int sessions = Main.playerRepository.players_list.get(0).getTotalSessions();
-        Main.playerRepository.players_list.get(0).setTimePlayed(secondsPlayed + seconds);
+        Main.playerRepository.players_list.get(0).setTotalTime(secondsPlayed + seconds);
         Main.playerRepository.players_list.get(0).setTotalSessions(sessions + 1);
-        PlayerDAO playerDao = new PlayerDAO();
-        playerDao.update();
     }
 }
