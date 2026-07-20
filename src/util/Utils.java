@@ -192,7 +192,7 @@ public class Utils {
                 .appendOptional(DateTimeFormatter.ISO_DATE_TIME)
                 .toFormatter();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String result = "";
         for (String fechaTexto : dateArray) {
             try {

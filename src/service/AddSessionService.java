@@ -28,9 +28,12 @@ public class AddSessionService {
     }
 
     public void addSession(Games game, LocalDateTime dateTimeStart, int seconds) {
-        // TODO: Formatear dateTimeStart y dateTimeEnd
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTimeEnd = dateTimeStart.plusSeconds(seconds);
-        History history = new History(Main.achievementsRepository.getList().size() + 1, "NO",  game.getId(), game.getName(), game.getLibrary(), game.getPlatform(), dateTimeStart.toString(), dateTimeEnd.toString(), seconds);
+        String dateTimeStartFormatted = dateTimeStart.format(formatter);
+        String dateTimeEndFormatted = dateTimeEnd.format(formatter);
+
+        History history = new History(Main.achievementsRepository.getList().size() + 1, "NO",  game.getId(), game.getName(), game.getLibrary(), game.getPlatform(), dateTimeStartFormatted, dateTimeEndFormatted, seconds);
         saveHistory(history);
         saveGameTime(game, seconds);
         plusLibrary(game, seconds);
