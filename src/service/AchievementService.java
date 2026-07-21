@@ -1,18 +1,23 @@
 package service;
 
-import controller.AchievementController;
+import dao.AchievementDAO;
+import model.Achievements;
 import model.Games;
 import util.Utils;
+import app.Main;
 
 public class AchievementService {
-    private AchievementController achievementController;
     private PlayerService playerService;
+    private LibraryService libraryService;
     private Games game;
+
+    public AchievementService(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
 
     public AchievementService(Games game) {
         this.game = game;
         playerService = new PlayerService();
-        achievementController = new AchievementController();
     }
 
     public void checkInGame(int playedSeconds) {
@@ -20,7 +25,7 @@ public class AchievementService {
 
         if(game.getTimePlayed() + playedSeconds == 240) {
             achievement = "Has jugado a " + game.getName() + " por primera vez";
-            achievementController.add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
+            add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
         }
 
         achievement = "";
@@ -40,7 +45,7 @@ public class AchievementService {
         else if(game.getTimePlayed() + playedSeconds == Utils.SECONDS_PER_HOUR * 10000) achievement = "Has alcanzado 10000 horas de juego en " + game.getName();
 
         if(!achievement.isEmpty()) {
-            achievementController.add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
+            add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
         }
 
         achievement = "";
@@ -63,8 +68,20 @@ public class AchievementService {
             else if(totalSecondsPlayed == Utils.SECONDS_PER_HOUR * 10000) achievement = "Has alcanzado 10000 horas de juego en total";
 
             if(!achievement.isEmpty()) {
-                achievementController.add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
+                add(game.getName(), game.getId(), achievement, Utils.getFormattedDateTime());
             }
         }
+    }
+
+    public void createGameObtainedAchievement(Games game) {
+        String text = "Obtuviste " + game.getName() + " en " + libraryService.findNameById(game.getLibrary());
+        add(game.getName(), game.getId(), text, Utils.getFormattedDateTime());
+    }
+
+    public void add(String name, int gameId, String description, String date) {
+        AchievementDAO achievementDAO = new AchievementDAO();
+        Achievements achievement = new Achievements(Main.achievementsRepository.getList().size() + 1, name, gameId, description, date);
+        Main.achievementsRepository.getList().add(achievement);
+        achievementDAO.add(achievement);
     }
 }

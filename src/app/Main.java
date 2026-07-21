@@ -33,7 +33,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 
 public class Main {
-    public static final String VERSION_APP = "2.0.0.19";
+    public static final String VERSION_APP = "2.0.0.20";
     public static PlayerRepository playerRepository;
     public static GameRepository gameRepository;
     public static CategoryRepository categoryRepository;
@@ -49,6 +49,7 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+        
         // Se inician los repositorios
         playerRepository = new PlayerRepository();
         gameRepository = new GameRepository();
@@ -58,13 +59,9 @@ public class Main {
         achievementsRepository = new AchievementRepository();
         historyRepository = new HistoryRepository();
 
-        TakeScreenshot takeScreenshot = new TakeScreenshot();
+        //TakeScreenshot takeScreenshot = new TakeScreenshot();
 
         // Se inicia la ventana principal
         Window mw = new Window();
-        
-
-        // test
-        //test t = new test();
     }
 }

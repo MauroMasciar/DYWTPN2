@@ -4,18 +4,23 @@ import app.Main;
 import model.Categories;
 import model.Libraries;
 import model.Platforms;
-import service.AddGameService;
+import service.AchievementService;
+import service.GameService;
+import service.LibraryService;
 import ui.AddGame;
 import ui.Window;
 import util.Utils;
 
 public class AddGameController {
     private AddGame view;
-    private AddGameService addGameService;
+    private GameService GameService;
+    private AchievementService achievementService;
     
     public AddGameController(Window window) {
         view = new AddGame(window, true);
-        addGameService = new AddGameService(view);
+        achievementService = new AchievementService(new LibraryService());
+        GameService = new GameService(view, achievementService);
+        
 
         loadCategories();
         loadLibraries();
@@ -25,9 +30,9 @@ public class AddGameController {
 
         view.showPopupCompletedDateListener(e -> showPopupCompletedDate());
         view.showPopupReleaseDateListener(e -> showPopupReleaseDate());
-        view.setBtnSaveListener(e -> addGameService.saveData());
+        view.setBtnSaveListener(e -> GameService.saveData());
         view.setSpinGameTimeListener(e -> setSpinGameTimer());
-        
+
         view.setVisible(true);
     }
 
