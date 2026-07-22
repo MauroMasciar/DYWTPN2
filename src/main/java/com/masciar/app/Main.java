@@ -29,6 +29,7 @@ import com.masciar.repository.LibraryRepository;
 import com.masciar.repository.PlatformsRepository;
 import com.masciar.repository.PlayerRepository;
 import com.masciar.service.ScreenshotService;
+import com.masciar.service.SteamService;
 import com.masciar.ui.Window;
 
 import javax.swing.UIManager;
@@ -36,7 +37,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 public class Main {
-    public static final String VERSION_APP = "2.0.0.22";
+    public static final String VERSION_APP = "2.0.0.24";
     public static PlayerRepository playerRepository;
     public static GameRepository gameRepository;
     public static CategoryRepository categoryRepository;
@@ -65,8 +66,8 @@ public class Main {
         ScreenshotService screenshotService = new ScreenshotService();
         screenshotService.initService();
 
-        //SteamService steamService = new SteamService();
-        //steamService.GetPlayerAchievements();
+        SteamService steamService = new SteamService();
+        steamService.getPlayerAchievements();
 
         // Se inicia la ventana principal
         Window mw = new Window();

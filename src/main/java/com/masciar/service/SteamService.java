@@ -1,5 +1,7 @@
 package com.masciar.service;
 
+import com.masciar.app.ApiSteamKey;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,11 +9,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class SteamService {
-    private static final String API_KEY = "TU_API_KEY";
+    ApiSteamKey apiSteamKey = new ApiSteamKey();
+    private String API_KEY = apiSteamKey.GetApiSteamKey();
 
-    public void GetPlayerAchievements() {
-        String steamId = "76561198000000000";
-        int appId = 220;
+    public void getPlayerAchievements() {
+        String steamId = "76561198201938341";
+        int appId = 813780;
 
         String url = String.format(
                 "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=%s&steamid=%s&appid=%d",
