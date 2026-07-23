@@ -2,6 +2,8 @@ package com.masciar.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.masciar.app.ApiSteamKey;
+import com.masciar.model.steam.GetOwnedGames.GameModel;
+import com.masciar.model.steam.GetOwnedGames.GetOwnedGamesResponse;
 import com.masciar.model.steam.vanity.ResolveVanityResponse;
 import com.masciar.model.steam.vanity.VanityModel;
 
@@ -10,13 +12,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class SteamService {
     ApiSteamKey apiSteamKey = new ApiSteamKey();
     private String API_KEY = apiSteamKey.GetApiSteamKey();
 
-    public String getSteamId(String name) {
-        String url = String.format("https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=%s&vanityurl=%s", API_KEY, name);
+    public String getSteamID64(String name) {
+        String url = String.format("https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=%s&vanityurl=%s",
+                API_KEY, name);
 
         HttpClient client = HttpClient.newHttpClient(); // creo un cliente
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build(); // envio un get para que me de el objeto
@@ -27,22 +31,42 @@ public class SteamService {
             String json = response.body(); // aca toma lo que esta dentro del body, osea el json
             ResolveVanityResponse steamResponse = mapper.readValue(json, ResolveVanityResponse.class);
             VanityModel vanity = steamResponse.getResponse();
-            if(vanity.getSuccess() == 1) return vanity.getSteamid();
+            if (vanity.getSuccess() == 1)
+                return vanity.getSteamid();
+
+            /*
+             * JsonNode root = mapper.readTree(json);
+             * String steamId = root.get("response").get("steamid").asText();
+             * return steamId;
+             */
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return "0";
     }
 
-    public void getPlayerAchievements() {
-        String steamId = "76561198201938341";
-        int appId = 813780;
-
+    public List<GameModel> getOwnedGames(String steamId64) {
+        HttpClient client = HttpClient.newHttpClient();
+        ObjectMapper mapper = new ObjectMapper();
         String url = String.format(
-                "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=%s&steamid=%s&appid=%d",
-                API_KEY,
-                steamId,
-                appId);
+                "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=%s&steamid=%s&include_appinfo=true", API_KEY, steamId64);
+
+        try {
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            GetOwnedGamesResponse steamResponse = mapper.readValue(response.body(), GetOwnedGamesResponse.class);
+            System.out.println(
+            steamResponse.getResponse().getGames().get(2).getName());
+            return steamResponse.getResponse().getGames();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void getPlayerGameAchievements(String steamId64, int appId) {
+        String url = String.format("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=%s&steamid=%s&appid=%d", API_KEY, steamId64, appId);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();

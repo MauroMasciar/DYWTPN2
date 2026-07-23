@@ -37,7 +37,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 public class Main {
-    public static final String VERSION_APP = "2.0.0.25";
+    public static final String VERSION_APP = "2.0.0.26";
     public static PlayerRepository playerRepository;
     public static GameRepository gameRepository;
     public static CategoryRepository categoryRepository;
@@ -67,9 +67,8 @@ public class Main {
         screenshotService.initService();
 
         SteamService steamService = new SteamService();
-        //steamService.getPlayerAchievements();
-        //steamService.getAppList();
-        //System.out.println("User id de steam: " + steamService.getSteamId("MauroMasciar"));
+        //System.out.println("User id de steam: " + steamService.getSteamID64("MauroMasciar")); // 76561198201938341
+        //steamService.getOwnedGames("76561198201938341");
 
         // Se inicia la ventana principal
         Window mw = new Window();

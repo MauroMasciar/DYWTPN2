@@ -1,5 +1,8 @@
 package com.masciar.model.steam.vanity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VanityModel {
     private String steamid;
     private int success;
