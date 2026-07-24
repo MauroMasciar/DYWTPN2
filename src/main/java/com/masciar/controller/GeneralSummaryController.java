@@ -1,18 +1,18 @@
 package com.masciar.controller;
 
-import com.masciar.ui.GeneralSummaryInternalFrame;
+import com.masciar.ui.GeneralSummary;
 import com.masciar.ui.MainWindow;
 import com.masciar.util.Utils;
 import com.masciar.service.PlayerService;
 
 public class GeneralSummaryController {
     MainWindow window;
-    GeneralSummaryInternalFrame view;
+    GeneralSummary view;
     PlayerService playerService;
 
     public GeneralSummaryController(MainWindow window) {
         this.window = window;
-        view = new GeneralSummaryInternalFrame();
+        view = new GeneralSummary();
         playerService = new PlayerService();
         window.add(view);
 

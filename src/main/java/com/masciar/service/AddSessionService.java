@@ -8,7 +8,7 @@ import com.masciar.dao.LibraryDAO;
 import com.masciar.dao.PlatformDAO;
 import com.masciar.model.Games;
 import com.masciar.model.History;
-import com.masciar.ui.SessionsHistoryInternalFrame;
+import com.masciar.ui.SessionsHistory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,7 +57,7 @@ public class AddSessionService {
         Main.historyRepository.getList().add(history);
         HistoryController historyController = new HistoryController();
         historyController.add(history);
-        SessionsHistoryInternalFrame.updateTableModel();
+        SessionsHistory.updateTableModel();
     }
 
     private void plusLibrary(Games game, int seconds) {

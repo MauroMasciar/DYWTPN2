@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-public class GeneralSummaryInternalFrame extends JInternalFrame {
+public class GeneralSummary extends JInternalFrame {
     private JPanel panelTitle = new JPanel();
     private JLabel lblTitle = new JLabel("Resumen general");
     private JPanel panelTime = new JPanel();
@@ -27,7 +27,7 @@ public class GeneralSummaryInternalFrame extends JInternalFrame {
     private JLabel lblSessions = new JLabel("Sesiones");
     private JLabel lblSessionsValue = new JLabel("No se pudieron cargar los datos");
     
-    public GeneralSummaryInternalFrame() {
+    public GeneralSummary() {
         initComponents();
     }
 

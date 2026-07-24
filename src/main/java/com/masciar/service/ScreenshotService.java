@@ -13,7 +13,7 @@ public class ScreenshotService {
             while (User32.INSTANCE.GetMessage(msg, null, 0, 0) != 0) {
                 if (msg.message == WinUser.WM_HOTKEY) {
                     System.out.println("reconoce");
-                    String name = String.valueOf(Math.random() + ".png");
+                    String name = String.valueOf(Math.random() + ".png"); // TODO: Obtener nombre con fecha y hora
                     ProcessBuilder pb = new ProcessBuilder(
                             "ffmpeg.exe",
                             "-f", "gdigrab",

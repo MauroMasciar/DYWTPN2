@@ -17,7 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
-public class AddSessionManuallyDialog extends JDialog {
+public class AddSessionManually extends JDialog {
     private final JLabel lblGame = new JLabel(" Juego:");
     private final JLabel lblTime = new JLabel(" Minutos:");
     private final JLabel lblDate = new JLabel(" Fecha:");
@@ -31,7 +31,7 @@ public class AddSessionManuallyDialog extends JDialog {
     private final SpinnerNumberModel spnModelTime = new SpinnerNumberModel();
     private final JButton btnAdd = new JButton();
 
-    public AddSessionManuallyDialog(MainWindow window, boolean modal) {
+    public AddSessionManually(MainWindow window, boolean modal) {
         super(window, true);
         setTitle("Añadir nueva sesión");
         setLayout(new GridBagLayout());

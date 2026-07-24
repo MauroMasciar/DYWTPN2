@@ -3,6 +3,7 @@ package com.masciar.ui;
 import com.masciar.app.Main;
 import com.masciar.controller.AddGameController;
 import com.masciar.controller.AddSessionManuallyController;
+import com.masciar.controller.GameInfoController;
 import com.masciar.controller.GeneralSummaryController;
 
 import java.awt.FlowLayout;
@@ -57,6 +58,10 @@ public class MainWindow extends JFrame implements ActionListener {
     private final JMenuItem mnuiHelpDebug = new JMenuItem("Debug", new ImageIcon("gfx/debug.png"));
     private final JMenuItem mnuiGamesExit = new JMenuItem("Salir");
     private JDesktopPane desktopPane;
+
+    // Ventanas
+    private GamesList gamesList;
+
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		String title = "NewGame+ — Game Session Tracker — v" + Main.VERSION_APP + "  ";
@@ -70,9 +75,16 @@ public class MainWindow extends JFrame implements ActionListener {
         setContentPane(desktopPane);
         
 		initComponents();
-    
-        add(new GamesListInternalFrame(desktopPane));
-        add(new SessionsHistoryInternalFrame());
+
+        gamesList = new GamesList(desktopPane);
+        add(gamesList);
+        
+        add(new SessionsHistory());
+        
+        @SuppressWarnings("unused")
+        GameInfoController gameInfoController = new GameInfoController(this);
+
+        gamesList.setListener(gameInfoController);
 
         @SuppressWarnings("unused")
         GeneralSummaryController generalSummaryController = new GeneralSummaryController(this);        
@@ -89,7 +101,7 @@ public class MainWindow extends JFrame implements ActionListener {
             AddSessionManuallyController addSessionController = new AddSessionManuallyController(this);
         } else if(e.getSource() == mnuiHelpAbout) {
             @SuppressWarnings("unused")
-            AboutDialog about = new AboutDialog(this, true);
+            About about = new About(this, true);
         }
 	}
 

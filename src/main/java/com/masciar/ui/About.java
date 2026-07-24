@@ -8,12 +8,12 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class AboutDialog extends JDialog {
+public class About extends JDialog {
     private final JPanel pnlInfo = new JPanel();
     private final JLabel lblFirstLine = new JLabel();
     private final JLabel lblSecondLine = new JLabel();
 
-    public AboutDialog(MainWindow window, boolean modal) {
+    public About(MainWindow window, boolean modal) {
         super(window, true);
         setBounds(90, 70, 420, 100);
         setTitle("Acerca de");

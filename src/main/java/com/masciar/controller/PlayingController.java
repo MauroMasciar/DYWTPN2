@@ -7,7 +7,7 @@ import com.masciar.service.AchievementService;
 import com.masciar.service.AddSessionService;
 import com.masciar.listener.ChronometerListener;
 import com.masciar.model.Games;
-import com.masciar.ui.ChronometerInternalFrame;
+import com.masciar.ui.Chronometer;
 import com.masciar.util.Utils;
 
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import javax.swing.Timer;
 
 public class PlayingController implements ChronometerListener {
     private Games game;
-    private ChronometerInternalFrame view;
+    private Chronometer view;
     private ChronometerService chronometerService;
     private AchievementService achievementService;
     private PlayingService playingService;
@@ -33,7 +33,7 @@ public class PlayingController implements ChronometerListener {
         this.desktopPane = desktopPane;
         
         // Iniciamos vista
-        view = new ChronometerInternalFrame();
+        view = new Chronometer();
         desktopPane.add(view);
         view.toFront();
 

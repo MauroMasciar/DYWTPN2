@@ -12,10 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-public class SessionsHistoryInternalFrame extends JInternalFrame {
+public class SessionsHistory extends JInternalFrame {
     private static HistoryTableModel historyTableModel;
     private static JTable table;
-    public SessionsHistoryInternalFrame() {
+    public SessionsHistory() {
         setTitle("Historial de juego");
         setSize(450, 500);
         initComponents();
