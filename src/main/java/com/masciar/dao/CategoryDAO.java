@@ -2,6 +2,7 @@ package com.masciar.dao;
 
 import com.masciar.app.Main;
 import com.masciar.model.Categories;
+import com.masciar.util.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,50 +13,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO {
-    private final String url = "jdbc:sqlite:database.db";
-    
     public List<Categories> getAll() {
         List<Categories> categories = new ArrayList<>();
         String query = "SELECT * FROM category ORDER BY id";
 
-        try(Connection con = DriverManager.getConnection(url);
-	        PreparedStatement ps = con.prepareStatement(query);
-	        ResultSet rs = ps.executeQuery()) {
+        try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()) {
-                Categories category = new Categories(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"), rs.getInt("total_sessions"));
+            while (rs.next()) {
+                Categories category = new Categories(rs.getInt("id"), rs.getString("name"), rs.getInt("time_played"),
+                        rs.getInt("total_sessions"));
                 categories.add(category);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return categories;
     }
 
-    public void add() {
-
-    }
-
-    public void update() {
-
-    }
-
     public void update(int i) {
         String query = "UPDATE category SET time_played = ?, total_sessions = ? WHERE id = ?";
-		try (Connection con = DriverManager.getConnection(url);
-			 PreparedStatement ps = con.prepareStatement(query)) {
+        try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+                PreparedStatement ps = con.prepareStatement(query)) {
 
-                ps.setInt(1, Main.categoryRepository.categories_list.get(i).getTimePlayed());
-                ps.setInt(2, Main.categoryRepository.categories_list.get(i).getTotalSessions());
-                ps.setInt(3, i);
-			    int rowsAffected = ps.executeUpdate();
-			    if(rowsAffected != 0) System.out.println("Categoria actualizada");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    }
-
-    public void delete() {
-
+            ps.setInt(1, Main.categoryRepository.categories_list.get(i).getTimePlayed());
+            ps.setInt(2, Main.categoryRepository.categories_list.get(i).getTotalSessions());
+            ps.setInt(3, i);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 0)
+                System.out.println("Categoria actualizada");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

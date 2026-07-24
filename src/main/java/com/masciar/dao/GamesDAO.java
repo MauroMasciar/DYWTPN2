@@ -1,6 +1,7 @@
 package com.masciar.dao;
 
 import com.masciar.model.Games;
+import com.masciar.util.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,40 +12,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamesDAO {
-	private final String url = "jdbc:sqlite:database.db";
-
 	public List<Games> getAll() {
-	    List<Games> games = new ArrayList<>();
+		List<Games> games = new ArrayList<>();
 
 		String query = "SELECT * FROM games ORDER BY id";
 
-	    try(Connection con = DriverManager.getConnection(url);
-	        PreparedStatement ps = con.prepareStatement(query);
-	        ResultSet rs = ps.executeQuery()) {
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+				PreparedStatement ps = con.prepareStatement(query);
+				ResultSet rs = ps.executeQuery()) {
 
-	        while(rs.next()) {
-	            Games game = new Games(rs.getInt("id"), rs.getString("name"), rs.getInt("category"), rs.getInt("library"), rs.getInt("score"), rs.getInt("time_played"), 
-					rs.getInt("play_count"), rs.getInt("completed"), rs.getString("completed_date"), rs.getInt("hidden"), rs.getString("path"), rs.getString("release_date"),
-					rs.getString("developer"), rs.getString("series"), rs.getString("play_mode"), rs.getString("status"), rs.getString("last_played"), 
-					rs.getString("rating"), rs.getInt("platform"), rs.getString("publisher"), rs.getString("region"), rs.getString("version"), rs.getString("added"), 
-					rs.getString("modified"), rs.getInt("favorite"), rs.getInt("statistic"), rs.getInt("portable"), rs.getString("image"), rs.getString("notes"));
-					
+			while (rs.next()) {
+				Games game = new Games(rs.getInt("id"), rs.getString("name"), rs.getInt("category"),
+						rs.getInt("library"), rs.getInt("score"), rs.getInt("time_played"),
+						rs.getInt("play_count"), rs.getInt("completed"), rs.getString("completed_date"),
+						rs.getInt("hidden"), rs.getString("path"), rs.getString("release_date"),
+						rs.getString("developer"), rs.getString("series"), rs.getString("play_mode"),
+						rs.getString("status"), rs.getString("last_played"),
+						rs.getString("rating"), rs.getInt("platform"), rs.getString("publisher"),
+						rs.getString("region"), rs.getString("version"), rs.getString("added"),
+						rs.getString("modified"), rs.getInt("favorite"), rs.getInt("statistic"), rs.getInt("portable"),
+						rs.getString("image"), rs.getString("notes"));
+
 				games.add(game);
-	        }
-	    } catch(SQLException e) {
-	        e.printStackTrace();
-	    }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return games;
+		return games;
 	}
 
 	public int getTotalTimePlayed() {
 		String query = "SELECT SUM(time_played) AS time_played FROM games";
-		try(Connection con = DriverManager.getConnection(url);
-	        PreparedStatement ps = con.prepareStatement(query);
-	        ResultSet rs = ps.executeQuery()) {
-				return rs.getInt("time_played");
-		} catch(SQLException e) {
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+				PreparedStatement ps = con.prepareStatement(query);
+				ResultSet rs = ps.executeQuery()) {
+			return rs.getInt("time_played");
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
@@ -52,8 +56,8 @@ public class GamesDAO {
 
 	public boolean add(Games game) {
 		String query = "INSERT INTO games (name, category, library, score, time_played, play_count, completed, completed_date, hidden, path, release_date, developer, series, play_mode, status, last_played, rating, platform, publisher, region, version, added, modified, favorite, statistic, portable, image, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		try (Connection con = DriverManager.getConnection(url);
-			 PreparedStatement ps = con.prepareStatement(query)) {
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+				PreparedStatement ps = con.prepareStatement(query)) {
 
 			ps.setString(1, game.getName());
 			ps.setInt(2, game.getCategory());
@@ -85,7 +89,8 @@ public class GamesDAO {
 			ps.setString(28, game.getNotes());
 
 			int rowsAffected = ps.executeUpdate();
-			if(rowsAffected != 0) return true;
+			if (rowsAffected != 0)
+				return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -94,8 +99,8 @@ public class GamesDAO {
 
 	public void update(Games game) {
 		String query = "UPDATE games SET name = ?, category = ?, library = ?, score = ?, time_played = ?, play_count = ?, completed = ?, completed_date = ?, hidden = ?, path = ?, release_date = ?, developer = ?, series = ?, play_mode = ?, status = ?, last_played = ?, rating = ?, platform = ?, publisher = ?, region = ?, version = ?, added = ?, modified = ?, favorite = ?, statistic = ?, portable = ?, image = ?, notes = ? WHERE id = ?;";
-		try (Connection con = DriverManager.getConnection(url);
-			 PreparedStatement ps = con.prepareStatement(query)) {
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
+				PreparedStatement ps = con.prepareStatement(query)) {
 
 			ps.setString(1, game.getName());
 			ps.setInt(2, game.getCategory());
@@ -128,7 +133,8 @@ public class GamesDAO {
 			ps.setInt(29, game.getId());
 
 			int rowsAffected = ps.executeUpdate();
-			if(rowsAffected != 0) System.out.println("Juego actualizado");
+			if (rowsAffected != 0)
+				System.out.println("Juego actualizado");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 package com.masciar.dao;
 
 import com.masciar.model.History;
+import com.masciar.util.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,14 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryDAO {
-	private final String url = "jdbc:sqlite:database.db";
-
 	public List<History> getAll() {
 		List<History> history = new ArrayList<>();
 
 		String query = "SELECT * FROM games_sessions_history ORDER BY id";
 
-		try (Connection con = DriverManager.getConnection(url);
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
 				PreparedStatement ps = con.prepareStatement(query);
 				ResultSet rs = ps.executeQuery()) {
 
@@ -36,7 +35,7 @@ public class HistoryDAO {
 
 	public void add(History history) {
 		String query = "INSERT INTO games_sessions_history (token, game_id, game_name, library_id, platform_id, datetime_start, datetime_end, seconds) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-		try (Connection con = DriverManager.getConnection(url);
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
 				PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setString(1, history.getToken());
 			ps.setInt(2, history.getGameId());
@@ -60,7 +59,7 @@ public class HistoryDAO {
 	public String getLastSessionFromGame(int id) {
 		String query = "SELECT datetime_start FROM games_sessions_history WHERE game_id = " + id
 				+ " ORDER BY id DESC LIMIT 1";
-		try (Connection con = DriverManager.getConnection(url);
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
 				PreparedStatement ps = con.prepareStatement(query)) {
 			ResultSet rs = ps.executeQuery();
 			return rs.getString("datetime_start");
@@ -72,7 +71,7 @@ public class HistoryDAO {
 
 	public int getLastSessionTimeFromGame(int id) {
 		String query = "SELECT seconds FROM games_sessions_history WHERE game_id = " + id + " ORDER BY id DESC LIMIT 1";
-		try (Connection con = DriverManager.getConnection(url);
+		try (Connection con = DriverManager.getConnection(Utils.DATABASE_URL);
 				PreparedStatement ps = con.prepareStatement(query)) {
 			ResultSet rs = ps.executeQuery();
 			return rs.getInt("seconds");
