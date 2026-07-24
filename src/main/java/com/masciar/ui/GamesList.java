@@ -4,6 +4,7 @@ import com.masciar.app.Main;
 import com.masciar.controller.PlayingController;
 import com.masciar.listener.GameSelectedListener;
 import com.masciar.model.Games;
+import com.masciar.service.GameService;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
@@ -12,8 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.Document;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
@@ -21,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.awt.event.ActionEvent;
 
-public class GamesList extends JInternalFrame implements ActionListener, ListSelectionListener {
+public class GamesList extends JInternalFrame implements ActionListener, ListSelectionListener, DocumentListener {
 	private static final long serialVersionUID = 6376047769180646261L;
 	JDesktopPane desktopPane;
 	
@@ -33,6 +38,7 @@ public class GamesList extends JInternalFrame implements ActionListener, ListSel
 	private JScrollPane scrollPane = new JScrollPane(jlistGames);
 	private DefaultListModel<Games> model = new DefaultListModel<>();
 	private GameSelectedListener listener;
+	private Timer debounce;
 	
 	public GamesList(JDesktopPane desktopPane) {
 		this.desktopPane = desktopPane;
@@ -61,7 +67,20 @@ public class GamesList extends JInternalFrame implements ActionListener, ListSel
 
 		btnLaunch.addActionListener(this);
 
+		Document docGameName = txtSearchGame.getDocument();
+		docGameName.addDocumentListener(this);
+
+		debounce = new Timer(500, e -> refreshList());
+		debounce.setRepeats(false);
+
 		setVisible(true);
+	}
+
+	public void refreshList() {
+		model.clear();
+		GameService gameService = new GameService();
+		model = gameService.searchGameModel(txtSearchGame.getText().toLowerCase());
+    	jlistGames.setModel(model);
 	}
 
 	public void setListener(GameSelectedListener listener) {
@@ -85,5 +104,20 @@ public class GamesList extends JInternalFrame implements ActionListener, ListSel
 		if(listener != null) {
 			listener.selectionChanged((Games) jlistGames.getSelectedValue());
 		}
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		debounce.restart();
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		debounce.restart();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		debounce.restart();
 	}
 }
